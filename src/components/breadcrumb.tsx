@@ -15,14 +15,15 @@ export default function Breadcrumb() {
   const [items, setItems] = useState<Item[]>([])
 
   useEffect(() => {
-    const items = router.asPath.split('/').filter((path, index) => path.length > 0 || index === 0);
+    const items = router.asPath
+      .split('/')
+      .filter((path, index) => path.length > 0 || index === 0)
+
     setItems(() => items.map((item: string) => ({
       path: `/${item}`,
       label: !!item.length ? item : 'Home',
     })))
   }, [router.asPath])
-
-  console.log(items)
 
   return (
     <nav className="inline-flex items-center">

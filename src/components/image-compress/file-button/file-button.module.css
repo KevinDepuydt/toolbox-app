@@ -1,0 +1,11 @@
+.input {
+  @apply hidden;
+}
+
+.button {
+  @apply flex align-middle justify-center;
+}
+
+.label {
+  @apply text-lg;
+}

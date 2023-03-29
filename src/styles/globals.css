@@ -96,6 +96,6 @@ body {
   }
 
   body {
-    background: #333;
+    @apply bg-slate-900;
   }
 }

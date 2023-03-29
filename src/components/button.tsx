@@ -1,16 +1,19 @@
 import React from 'react';
-import styles from '../styles/button.module.css';
+import styles from '@styles/button.module.css';
 
 
 interface ButtonProps {
-  label: string;
-  onClick(event: React.MouseEvent<HTMLElement>): void;
+  label?: string
+  children?: React.ReactNode
+  className?: string
+  onClick(event: React.MouseEvent<HTMLElement>): void
 }
 
-export default function Button({ label, onClick }: ButtonProps) {
+export default function Button({ children, label, onClick, className = '' }: ButtonProps) {
   return (
-    <button className={styles.primary} onClick={onClick}>
+    <button className={`${styles.green} ${className}`} onClick={onClick}>
       {label}
+      {children}
     </button>
   );
 }
