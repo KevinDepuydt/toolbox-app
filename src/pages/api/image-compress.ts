@@ -12,7 +12,7 @@ type Data = {
 export const config = {
   api: {
     bodyParser: false
-  }
+  },
 }
 
 async function parseFiles(
