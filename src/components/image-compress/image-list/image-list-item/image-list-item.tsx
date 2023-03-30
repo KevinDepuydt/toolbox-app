@@ -1,4 +1,4 @@
-import { DownloadIcon, LoadingIcon, TrashIcon } from '@components/icons'
+import { DownloadIcon, EyeIcon, LoadingIcon, TrashIcon } from '@components/icons'
 import { compareFilesSize, fileToDataUrl, formatFileSize } from './image-list-item.utils'
 import styles from './image-list-item.module.css'
 
@@ -34,6 +34,10 @@ export default function ImageListItem({ image, onDelete }: ImageCardProps) {
         </p>
       </div>
       <div className={styles.actions}>
+        <button disabled={!image.done || !image.outputFile} onClick={handleDownload} className={styles.buttonDefault}>
+          <EyeIcon />
+          <span className="sr-only">Preview</span>
+        </button>
         <button disabled={!image.done || !image.outputFile} onClick={handleDownload} className={styles.successButton}>
           {image.done ? <DownloadIcon /> : <LoadingIcon />}
           <span className="sr-only">Download</span>

@@ -1,11 +1,11 @@
 .container {
-  @apply bg-slate-200 p-4 rounded-md shadow-md;
+  @apply bg-slate-100 p-4 rounded-md shadow-md;
 }
 
 .title {
-  @apply font-bold text-xl text-slate-900;
+  @apply font-bold text-lg text-slate-700;
 }
 
 .description {
-  @apply text-sm text-slate-600;
+  @apply text-sm text-slate-400;
 }

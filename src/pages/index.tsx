@@ -15,7 +15,7 @@ export async function getStaticProps() {
   return {
     props: {
       features: [
-        { name: 'Image Compress', description: 'Compress images to reduce their size', path: '/image-compress' },
+        { name: 'Image Compress', description: 'Reduce the size of JPEG, PNG and WEBP images', path: '/image-compress' },
       ]
     }
   }

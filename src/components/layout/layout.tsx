@@ -6,7 +6,7 @@ import Breadcrumb from '@components/breadcrumb/breadcrumb';
 
 
 const roboto = Roboto({
-  weight: '400',
+  weight: ['100', '300', '400', '700', '900'],
   subsets: ['latin'],
 })
 
