@@ -41,7 +41,7 @@ export default function ImageListItem({ image, onDelete }: ImageCardProps) {
         </p>
       </div>
       <div className={styles.actions}>
-        <button disabled={!image.done || !image.outputFile} onClick={handleOpen} className={styles.buttonDefault}>
+        <button disabled={!image.outputFile} onClick={handleOpen} className={styles.buttonDefault}>
           <EyeIcon />
           <span className="sr-only">Preview</span>
         </button>
