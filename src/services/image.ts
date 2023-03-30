@@ -1,5 +1,4 @@
 import sharp from 'sharp'
-import { Buffer } from 'buffer'
 
 
 const SHARP_CONFIG = {
