@@ -1,5 +1,7 @@
 # Toolbox App
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a4ace3c6-94a3-41b2-b0b3-c445407cde43/deploy-status)](https://app.netlify.com/sites/resplendent-marzipan-2a0475/deploys)
+
 A toolbox web app to perform format conversions, images compression and more to come.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
