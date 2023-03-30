@@ -1,9 +1,9 @@
 .container {
-  @apply bg-slate-100 p-4 rounded-md shadow-md;
+  @apply bg-white border border-gray-100 p-4 rounded-md shadow-md text-slate-600 hover:text-slate-900;
 }
 
 .title {
-  @apply font-bold text-lg text-slate-700;
+  @apply font-bold text-lg;
 }
 
 .description {
