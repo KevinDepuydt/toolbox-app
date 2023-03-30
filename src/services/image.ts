@@ -11,7 +11,7 @@ const SHARP_CONFIG = {
 export class ImageService {
   async compress(file: Express.Multer.File): Promise<Buffer> {
     const image = sharp(file.buffer)
-    const { format = null } = await image.metadata()
+    const { format } = await image.metadata()
 
     switch (format) {
       case 'jpeg':
