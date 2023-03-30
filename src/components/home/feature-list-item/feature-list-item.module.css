@@ -1,0 +1,11 @@
+.container {
+  @apply bg-white border border-gray-100 p-4 rounded-md shadow-md text-slate-600 hover:text-slate-900;
+}
+
+.title {
+  @apply font-bold text-lg;
+}
+
+.description {
+  @apply text-sm text-slate-400;
+}

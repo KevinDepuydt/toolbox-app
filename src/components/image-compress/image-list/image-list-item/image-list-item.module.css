@@ -1,0 +1,47 @@
+.container {
+  @apply flex flex-row justify-between items-center bg-white border border-gray-100 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 p-4;
+}
+
+.details {
+  @apply pr-4 flex-1 max-w-[calc(100%-100px)];
+}
+
+.filename {
+  @apply text-lg text-slate-700 whitespace-nowrap text-ellipsis overflow-hidden;
+}
+
+.status {
+  @apply text-sm text-slate-600;
+}
+
+.successStatus {
+  @apply text-sm text-green-500;
+}
+
+.errorStatus {
+  @apply text-sm text-red-600;
+}
+
+.actions {
+  @apply flex flex-row justify-end pt-2;
+}
+
+.button {
+  @apply ml-2 focus:ring-4 focus:outline-none rounded-lg p-2.5 text-center inline-flex items-center;
+}
+
+.buttonDefault {
+  @apply button text-slate-700 bg-slate-100 hover:bg-slate-200 focus:ring-slate-50 disabled:text-slate-900 disabled:bg-slate-100 disabled:hover:bg-slate-100 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-300;
+}
+
+.disabledButtonState {
+  @apply disabled:text-slate-900 disabled:bg-slate-100 disabled:hover:bg-slate-100;
+}
+
+.successButton {
+  @apply button text-slate-700 bg-slate-100 hover:text-green-500 hover:bg-green-100 focus:ring-green-50 disabledButtonState;
+}
+
+.errorButton {
+  @apply button text-slate-700 bg-slate-100 hover:text-red-500 hover:bg-red-100 focus:ring-red-50 disabledButtonState;
+}
