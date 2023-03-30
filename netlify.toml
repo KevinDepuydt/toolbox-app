@@ -1,4 +1,3 @@
 [functions]
-# node_bundler = "esbuild"
-# external_node_modules = ["sharp"]
+# prevent sharp module to be excluded from bundle by Next at build time
 included_files = ['node_modules/sharp/**/*']
