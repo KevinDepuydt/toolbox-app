@@ -2,28 +2,34 @@ import sharp from 'sharp'
 import { Buffer } from 'buffer'
 
 
+const SHARP_CONFIG = {
+  jpeg: { quality: 70 },
+  png: { quality: 70, compressionLevel: 8 },
+  webp: { quality: 70 }
+}
+
 export class ImageService {
   async compress(file: Express.Multer.File): Promise<Buffer> {
-    const sharpFile = sharp(file.buffer)
-    const { format } = await sharpFile.metadata()
+    const image = sharp(file.buffer)
+    const { format = null } = await image.metadata()
 
     switch (format) {
       case 'jpeg':
       case 'jpg':
-        sharpFile.jpeg({ quality: 70 })
+        image.jpeg(SHARP_CONFIG.jpeg)
         break
       case 'png':
-        sharpFile.png({ compressionLevel: 7 })
+        image.png(SHARP_CONFIG.png)
         break
       case 'webp':
-        sharpFile.webp({ quality: 70 })
+        image.webp(SHARP_CONFIG.webp)
         break
       default:
         console.log(`format ${format} not handled for image compression`)
         break
     }
 
-    return sharpFile.toBuffer()
+    return image.toBuffer()
   }
 }
 
