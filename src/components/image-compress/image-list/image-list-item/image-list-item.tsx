@@ -23,6 +23,13 @@ export default function ImageListItem({ image, onDelete }: ImageCardProps) {
     onDelete(image)
   }
 
+  function handleOpen() {
+    if (image.outputFile) {
+      const url = URL.createObjectURL(image.outputFile)
+      window.open(url, '_blank')
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.details}>
@@ -34,7 +41,7 @@ export default function ImageListItem({ image, onDelete }: ImageCardProps) {
         </p>
       </div>
       <div className={styles.actions}>
-        <button disabled={!image.done || !image.outputFile} onClick={handleDownload} className={styles.buttonDefault}>
+        <button disabled={!image.done || !image.outputFile} onClick={handleOpen} className={styles.buttonDefault}>
           <EyeIcon />
           <span className="sr-only">Preview</span>
         </button>
