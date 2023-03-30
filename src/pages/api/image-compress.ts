@@ -15,7 +15,7 @@ export const config = {
   api: {
     bodyParser: false
   },
-  type: 'experimental-background',
+  // type: 'experimental-background',
 }
 
 async function parseFiles(
