@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import Button from '@components/button'
+import Button from '@components/button/button'
 import { UploadIcon } from '@components/icons'
 import styles from './file-button.module.css'
 

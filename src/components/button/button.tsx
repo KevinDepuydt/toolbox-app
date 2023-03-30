@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from '@styles/button.module.css';
+import React from 'react'
+import styles from './button.module.css'
 
 
 interface ButtonProps {
@@ -15,5 +15,5 @@ export default function Button({ children, label, onClick, className = '' }: But
       {label}
       {children}
     </button>
-  );
+  )
 }

@@ -1,3 +1,7 @@
+.container {
+  @apply flex items-center;
+}
+
 .text {
   @apply ml-0 text-sm font-medium text-gray-500 dark:text-gray-400;
 }

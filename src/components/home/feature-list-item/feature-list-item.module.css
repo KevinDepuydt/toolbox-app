@@ -1,0 +1,11 @@
+.container {
+  @apply bg-slate-200 p-4 rounded-md shadow-md;
+}
+
+.title {
+  @apply font-bold text-xl text-slate-900;
+}
+
+.description {
+  @apply text-sm text-slate-600;
+}

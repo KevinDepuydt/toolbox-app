@@ -1,5 +1,5 @@
 import React from 'react'
-import ImageListItem from './image-list-item'
+import ImageListItem from './image-list-item/image-list-item'
 import styles from './image-list.module.css'
 
 

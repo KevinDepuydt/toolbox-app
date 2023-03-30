@@ -1,33 +1,13 @@
-import styles from '@styles/home.module.css';
+import FeatureList from '@components/home/feature-list/feature-list'
 
-type FeatureCard = {
-  name: string
-  description: string
-  path: string
-}
 
 type HomeProps = {
-  features: FeatureCard[]
+  features: Feature[]
 }
 
 export default function Home({ features }: HomeProps) {
   return (
-    <>
-      <div className={styles.cards}>
-        {features.map((feature) => (
-          <FeatureCard key={feature.path} {...feature} />
-        ))}
-      </div>
-    </>
-  );
-}
-
-function FeatureCard(feature: FeatureCard) {
-  return (
-    <a href={feature.path} className={styles.card}>
-      <h3 className={styles.cardTitle}>{feature.name}</h3>
-      <p className={styles.cardDescription}>{feature.description}</p>
-    </a>
+    <FeatureList features={features} />
   )
 }
 
