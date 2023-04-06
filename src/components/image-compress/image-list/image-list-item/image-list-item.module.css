@@ -35,13 +35,13 @@
 }
 
 .buttonDefault {
-  @apply button disabledButton text-slate-700 bg-slate-100 hover:bg-slate-200 focus:ring-slate-50 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-300;
+  @apply button disabledButton text-slate-700 bg-slate-100 hover:bg-slate-200 focus:ring-slate-50 dark:text-white dark:bg-slate-500 dark:hover:bg-slate-400 dark:focus:ring-slate-400;
 }
 
 .successButton {
-  @apply button disabledButton text-slate-700 bg-slate-100 hover:text-green-500 hover:bg-green-100 focus:ring-green-50;
+  @apply buttonDefault hover:text-green-500 hover:bg-green-100 focus:ring-green-50 dark:hover:bg-green-200 dark:focus:ring-green-100;
 }
 
 .errorButton {
-  @apply button disabledButton text-slate-700 bg-slate-100 hover:text-red-500 hover:bg-red-100 focus:ring-red-50;
+  @apply buttonDefault text-slate-700 bg-slate-100 hover:text-red-500 hover:bg-red-100 focus:ring-red-50 dark:hover:bg-red-200 dark:focus:ring-red-100;
 }
