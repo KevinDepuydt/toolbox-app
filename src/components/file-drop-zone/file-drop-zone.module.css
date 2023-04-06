@@ -1,0 +1,11 @@
+.container {
+  @apply p-4 bg-slate-100 border-2 border-slate-300 border-dashed rounded-md cursor-pointer dark:bg-slate-800 dark:border-slate-700;
+}
+
+.input {
+  @apply hidden;
+}
+
+.help {
+  @apply m-0 py-8 text-sm text-slate-400 text-center;
+}

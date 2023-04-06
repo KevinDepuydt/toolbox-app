@@ -1,13 +1,13 @@
 .container {
-  @apply flex flex-row justify-between items-center bg-white border border-gray-100 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 p-4;
+  @apply flex flex-row justify-between items-center bg-white border border-slate-100 rounded-lg shadow-sm dark:bg-slate-700 dark:border-slate-600 p-4;
 }
 
 .details {
-  @apply pr-4 flex-1 max-w-[calc(100%-100px)];
+  @apply pr-4 flex-1 max-w-[calc(100%-150px)];
 }
 
 .filename {
-  @apply text-lg text-slate-700 whitespace-nowrap text-ellipsis overflow-hidden;
+  @apply text-lg text-slate-700 whitespace-nowrap text-ellipsis overflow-hidden dark:text-slate-100;
 }
 
 .status {

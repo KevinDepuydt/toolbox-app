@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { v4 as uuid } from 'uuid'
-import FileButton from '@components/image-compress/file-button/file-button'
+import FileDropZone from '@components/file-drop-zone/file-drop-zone'
 import ImageList from '@components/image-compress/image-list/image-list'
 
 
@@ -74,7 +74,7 @@ export default function ImageCompressPage() {
 
   return (
     <>
-      <FileButton onSelect={handleSelect} />
+      <FileDropZone accept="image/*" onSelect={handleSelect} />
       <ImageList images={images} onDelete={deleteImage} />
     </>
   );

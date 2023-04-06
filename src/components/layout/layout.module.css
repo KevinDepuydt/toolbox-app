@@ -3,7 +3,7 @@
 }
 
 .title {
-  @apply font-bold text-slate-900 text-2xl pt-4 pb-2;
+  @apply font-bold text-slate-900 text-2xl pt-4 pb-2 dark:text-white;
 }
 
 .subtitle {
