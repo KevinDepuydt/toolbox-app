@@ -8,4 +8,7 @@ export default defineConfig({
       bundler: 'webpack',
     },
   },
+  e2e: {
+    baseUrl: 'http://0.0.0.0:3000',
+  },
 })
