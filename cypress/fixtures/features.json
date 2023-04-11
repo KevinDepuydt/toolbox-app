@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Feature 1",
+    "description": "feature 1 description",
+    "path": "/feature-1-path"
+  },
+  {
+    "name": "Feature 2",
+    "description": "feature 2 description",
+    "path": "/feature-2-path"
+  }
+]

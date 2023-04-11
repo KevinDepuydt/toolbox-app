@@ -1,13 +1,13 @@
 import React from 'react'
 import Button from './button'
 
-// Constants
-const BUTTON_LABEL = 'Click me'
-const BUTTON_CUSTOM_CLASS = 'testing-class'
-const LOG_MESSAGE = 'clicked!'
-const onClick = () => console.log(LOG_MESSAGE)
 
 describe('<Button />', () => {
+  const label = 'Click me'
+  const customClass = 'testing-class'
+  const logMessage = 'clicked!'
+  const onClick = () => console.log(logMessage)
+
   beforeEach(() => {
     cy.window().then((win) => {
       cy.wrap(cy.spy(win.console, 'log')).as('consoleLog')
@@ -15,26 +15,26 @@ describe('<Button />', () => {
   })
 
   it('renders with expected label', () => {
-    cy.mount(<Button label={BUTTON_LABEL} onClick={onClick} />)
-    cy.get('button').should('contain.text', BUTTON_LABEL)
+    cy.mount(<Button label={label} onClick={onClick} />)
+    cy.get('button').should('contain.text', label)
   })
 
   it('renders with expected children', () => {
-    const children = <span>{BUTTON_LABEL}</span>
+    const children = <span>{label}</span>
     cy.mount(<Button onClick={onClick}>{children}</Button>)
     cy.get('button')
-      .should('contain.html', `<span>${BUTTON_LABEL}</span>`)
-      .and('contain.text', BUTTON_LABEL)
+      .should('contain.html', `<span>${label}</span>`)
+      .and('contain.text', label)
   })
 
   it('renders with expected classname', () => {
-    cy.mount(<Button label={BUTTON_LABEL} onClick={onClick} className={BUTTON_CUSTOM_CLASS} />)
-    cy.get('button').should('have.class', BUTTON_CUSTOM_CLASS)
+    cy.mount(<Button label={label} onClick={onClick} className={customClass} />)
+    cy.get('button').should('have.class', customClass)
   })
 
   it('runs onClick as expected', () => {
-    cy.mount(<Button label={BUTTON_LABEL} onClick={onClick} />)
+    cy.mount(<Button label={label} onClick={onClick} />)
     cy.get('button').click()
-    cy.get('@consoleLog').should('be.calledWith', LOG_MESSAGE)
+    cy.get('@consoleLog').should('be.calledWith', logMessage)
   })
 })
