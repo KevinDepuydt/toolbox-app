@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import {  useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import BreadcrumbItem from './breadcrumb-item/breadcrumb-item'
 import styles from './breadcrumb.module.css'
 
@@ -20,7 +20,7 @@ export default function Breadcrumb() {
   }, [router.asPath])
 
   return (
-    <nav className={styles.container}>
+    <nav data-cy="breadcrumb" className={styles.container}>
       {items.map((item, index) => (
         <BreadcrumbItem
           key={`breadcrumb-item-${index}}`}

@@ -31,25 +31,39 @@ export default function ImageListItem({ image, onDelete }: ImageCardProps) {
   }
 
   return (
-    <div className={styles.container}>
+    <div data-cy="image-list-item" className={styles.container}>
       <div className={styles.details}>
-        <p className={styles.filename}>{image.inputFile.name}</p>
-        <p className={styles.status}>
+        <p data-cy="image-list-item-filename" className={styles.filename}>{image.inputFile.name}</p>
+        <p data-cy="image-list-item-status" className={styles.status}>
           {!image.done && <span>Compressing image ...</span>}
           {image.done && image.outputFile && <span className={styles.successStatus}>File size is now {formatFileSize(image.outputFile)} ({compareFilesSize(image.inputFile, image.outputFile)}%)</span>}
           {image.done && !image.outputFile && <span className={styles.errorStatus}>{image.error}</span>}
         </p>
       </div>
       <div className={styles.actions}>
-        <button disabled={!image.outputFile} onClick={handleOpen} className={styles.buttonDefault}>
+        <button
+          data-cy="image-list-item-preview-button"
+          onClick={handleOpen}
+          disabled={!image.outputFile}
+          className={styles.buttonDefault}
+        >
           <EyeIcon />
           <span className="sr-only">Preview</span>
         </button>
-        <button disabled={!image.done || !image.outputFile} onClick={handleDownload} className={styles.successButton}>
+        <button
+          data-cy="image-list-item-download-button"
+          onClick={handleDownload}
+          disabled={!image.done || !image.outputFile}
+          className={styles.successButton}
+        >
           {image.done ? <DownloadIcon /> : <LoadingIcon />}
           <span className="sr-only">Download</span>
         </button>
-        <button onClick={handleDelete} className={styles.errorButton}>
+        <button
+          data-cy="image-list-item-delete-button"
+          onClick={handleDelete}
+          className={styles.errorButton}
+        >
           <TrashIcon />
           <span className="sr-only">Delete</span>
         </button>

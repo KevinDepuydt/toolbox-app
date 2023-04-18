@@ -19,15 +19,15 @@ export default function Layout({ children }: LayoutProps) {
     <>
       <Head>
         <title>Kevin&apos;s tools</title>
-        <meta name="description" content="A toolbox to handle common tasks" />
+        <meta name="description" content="A toolbox to handle common digital tasks" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${roboto.className}`}>
-        <h1 className={styles.title}>Kevin&apos;s tools</h1>
-        <p className={styles.subtitle}>A list of tools to handle digital tasks</p>
+      <main data-cy="layout" className={`${styles.main} ${roboto.className}`}>
+        <h1 data-cy="layout-title" className={styles.title}>Kevin&apos;s tools</h1>
+        <p data-cy="layout-subtitle" className={styles.subtitle}>A list of tools to handle digital tasks</p>
         <Breadcrumb />
-        <div className={styles.content}>
+        <div data-cy="layout-content" className={styles.content}>
           {children}
         </div>
       </main>

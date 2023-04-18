@@ -9,7 +9,7 @@ type FeatureListProps = {
 
 export default function FeatureList({ features }: FeatureListProps) {
   return (
-    <div className={styles.container}>
+    <div data-cy="feature-list" className={styles.container}>
       {features.map((feature) => (
         <FeatureListItem
           key={feature.path}

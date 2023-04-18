@@ -10,7 +10,7 @@ type ImageListProps = {
 
 export default function ImageList({ images, onDelete }: ImageListProps) {
   return (
-    <div className={styles.container}>
+    <div data-cy="image-list" className={styles.container}>
       {images.map((image) => (
         <ImageListItem key={image.id} image={image} onDelete={onDelete} />
       ))}
