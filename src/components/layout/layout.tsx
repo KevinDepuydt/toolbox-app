@@ -21,7 +21,7 @@ export default function Layout({ children }: LayoutProps) {
         <title>Kevin&apos;s tools</title>
         <meta name="description" content="A toolbox to handle common digital tasks" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
       </Head>
       <main data-cy="layout" className={`${styles.main} ${roboto.className}`}>
         <h1 data-cy="layout-title" className={styles.title}>Kevin&apos;s tools</h1>
