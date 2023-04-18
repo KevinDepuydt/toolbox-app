@@ -9,9 +9,9 @@ describe('<FeatureListItem />', () => {
     })
   })
 
-  it('renders feature list item correctly', function() {
+  it('renders feature list item', function() {
     cy.mount(<FeatureListItem feature={this.feature} />)
-    cy.get('a').should('be.visible').and('have.attr', 'href', this.feature.path)
+    cy.get('a[data-cy="feature-list-item"]').should('be.visible').and('have.attr', 'href', this.feature.path)
     cy.get('h3').should('contain.text', this.feature.name)
     cy.get('p').should('contain.text', this.feature.description)
   })

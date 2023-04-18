@@ -20,7 +20,7 @@ export default function Breadcrumb() {
   }, [router.asPath])
 
   return (
-    <nav className={styles.container}>
+    <nav data-cy="breadcrumb" className={styles.container}>
       {items.map((item, index) => (
         <BreadcrumbItem
           key={`breadcrumb-item-${index}}`}

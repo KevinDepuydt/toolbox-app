@@ -13,10 +13,10 @@ describe('<Breadcrumb />', () => {
 
     it('renders home element only', () => {
       cy.mount(<Breadcrumb />)
-      cy.get('nav').should('be.visible')
-      cy.get('nav').children().should('have.length', 1)
-      cy.get('nav').children().first().should('have.text', homeLabel)
-      cy.get('nav').children().eq(1).should('not.exist')
+      cy.get('nav[data-cy="breadcrumb"]').should('be.visible')
+      cy.get('nav[data-cy="breadcrumb"]').children('[data-cy="breadcrumb-item"]').should('have.length', 1)
+      cy.get('nav[data-cy="breadcrumb"]').children('[data-cy="breadcrumb-item"]').first().should('have.text', homeLabel)
+      cy.get('nav[data-cy="breadcrumb"]').children('[data-cy="breadcrumb-item"]').eq(1).should('not.exist')
     })
   })
 
@@ -29,10 +29,10 @@ describe('<Breadcrumb />', () => {
 
     it('renders all elements of path', () => {
       cy.mount(<Breadcrumb />)
-      cy.get('nav').should('be.visible')
-      cy.get('nav').children().should('have.length', pathArray.length)
-      cy.get('nav').children().first().should('have.text', homeLabel)
-      cy.get('nav').children().eq(1).should('have.text', pathArray[1])
+      cy.get('nav[data-cy="breadcrumb"]').should('be.visible')
+      cy.get('nav[data-cy="breadcrumb"]').children('[data-cy="breadcrumb-item"]').should('have.length', pathArray.length)
+      cy.get('nav[data-cy="breadcrumb"]').children('[data-cy="breadcrumb-item"]').first().should('have.text', homeLabel)
+      cy.get('nav[data-cy="breadcrumb"]').children('[data-cy="breadcrumb-item"]').eq(1).should('have.text', pathArray[1])
     })
   })
 
@@ -45,12 +45,12 @@ describe('<Breadcrumb />', () => {
 
     it('renders all elements of path', () => {
       cy.mount(<Breadcrumb />)
-      cy.get('nav').should('be.visible')
-      cy.get('nav').children().should('have.length', pathArray.length)
-      cy.get('nav').children().first().should('have.text', homeLabel)
-      cy.get('nav').children().eq(1).should('have.text', pathArray[1])
-      cy.get('nav').children().eq(2).should('have.text', pathArray[2])
-      cy.get('nav').children().eq(3).should('have.text', pathArray[3])
+      cy.get('nav[data-cy="breadcrumb"]').should('be.visible')
+      cy.get('nav[data-cy="breadcrumb"]').children('[data-cy="breadcrumb-item"]').should('have.length', pathArray.length)
+      cy.get('nav[data-cy="breadcrumb"]').children('[data-cy="breadcrumb-item"]').first().should('have.text', homeLabel)
+      cy.get('nav[data-cy="breadcrumb"]').children('[data-cy="breadcrumb-item"]').eq(1).should('have.text', pathArray[1])
+      cy.get('nav[data-cy="breadcrumb"]').children('[data-cy="breadcrumb-item"]').eq(2).should('have.text', pathArray[2])
+      cy.get('nav[data-cy="breadcrumb"]').children('[data-cy="breadcrumb-item"]').eq(3).should('have.text', pathArray[3])
     })
   })
 })
