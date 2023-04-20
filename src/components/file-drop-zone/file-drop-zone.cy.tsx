@@ -7,7 +7,6 @@ describe('<FileDropZone />', () => {
   const accept = 'image/*'
   let files: File[] = []
   const onSelect = (selectedFiles: File[]) => {
-    console.log('onSelect', selectedFiles)
     files = selectedFiles
   }
 
@@ -17,10 +16,11 @@ describe('<FileDropZone />', () => {
 
   it('renders the component properly', () => {
     cy.mount(<FileDropZone accept={accept} onSelect={onSelect} />)
+    cy.get('[data-cy="file-drop-zone"]').should('be.visible')
     cy.get('input[type=file]')
       .should('have.attr', 'accept', accept)
       .and('not.be.visible')
-    cy.get('p').should('have.text', 'Drop files here or click to select')
+    cy.get('[data-cy="file-drop-zone-message"]').should('have.text', 'Drop files here or click to select')
   })
 
   context('when user select files', () => {
@@ -93,7 +93,9 @@ describe('<FileDropZone />', () => {
 
       cy.mount(<FileDropZone accept={accept} onSelect={onSelectSpy} />)
 
-      cy.get('div p')
+      // drag-n-drop on p element instead of div container
+      // to prevent selectFile command issue with nodes that haven children
+      cy.get('[data-cy="file-drop-zone-message"]')
         .selectFile(filenames.map((filename) => `${assetsFixturesBasePath}/${filename}`), { action: 'drag-drop' })
         .then(() => {
           expect(files).to.have.length(1)
@@ -109,7 +111,9 @@ describe('<FileDropZone />', () => {
 
       cy.mount(<FileDropZone accept={accept} onSelect={onSelectSpy} />)
 
-      cy.get('div p')
+      // drag-n-drop on p element instead of div container
+      // to prevent selectFile command issue with nodes that haven children
+      cy.get('[data-cy="file-drop-zone-message"]')
         .selectFile(filenames.map((filename) => `${assetsFixturesBasePath}/${filename}`), { action: 'drag-drop' })
         .then(() => {
           expect(files).to.have.length(4)
@@ -130,7 +134,7 @@ describe('<FileDropZone />', () => {
 
       // drag-n-drop on p element instead of div container
       // to prevent selectFile command issue with nodes that haven children
-      cy.get('div p')
+      cy.get('[data-cy="file-drop-zone-message"]')
         .selectFile(filenames.map((filename) => `${assetsFixturesBasePath}/${filename}`), { action: 'drag-drop' })
         .then(() => {
           expect(files).to.have.length(2)

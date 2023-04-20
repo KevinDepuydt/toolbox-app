@@ -70,12 +70,14 @@ export default function FileDropZone({ accept, children, onSelect }: FileDropZon
 
   return (
     <div
+      data-cy="file-drop-zone"
       onDragOver={handleDragOver}
       onDrop={handleDrop}
       onClick={handleBrowse}
       className={styles.container}
     >
       <input
+        data-cy="file-drop-zone-input"
         type="file"
         multiple={true}
         ref={input}
@@ -83,7 +85,12 @@ export default function FileDropZone({ accept, children, onSelect }: FileDropZon
         accept={accept}
         className={styles.input}
       />
-      <p className={styles.help}>Drop files here or click to select</p>
+      <p
+        data-cy="file-drop-zone-message"
+        className={styles.help}
+      >
+        Drop files here or click to select
+      </p>
       {children}
     </div>
   )
