@@ -1,16 +1,18 @@
 import React from 'react'
 
-const HOME_URL = 'http://localhost:3000'
-
 describe('home page spec', () => {
-  beforeEach(() => {
-    cy.visit(HOME_URL)
+  before(() => {
+    cy.fixture('layout').as('layout')
   })
 
-  it('renders the page layout', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:3000')
+  })
+
+  it('renders the page layout', function() {
     cy.get('[data-cy="layout"]').should('be.visible')
-    cy.get('[data-cy="layout-title"]').should('have.text', 'Kevin\'s tools')
-    cy.get('[data-cy="layout-subtitle"]').should('have.text', 'A list of tools to handle digital tasks')
+    cy.get('[data-cy="layout-title"]').should('have.text', this.layout.title)
+    cy.get('[data-cy="layout-subtitle"]').should('have.text', this.layout.description)
   })
 
   it('renders the page breadcrumb', () => {
@@ -24,7 +26,7 @@ describe('home page spec', () => {
     cy.get('[data-cy="feature-list"]').children('[data-cy="feature-list-item"]').should('have.length', 1)
   })
 
-  it('redirects to the feature page when user clicks a feature item', function() {
+  it('redirects to the feature page when user clicks a feature item', () => {
     cy.get('[data-cy="feature-list-item"]').first().invoke('attr', 'href').then((href) => {
       cy.get('[data-cy="feature-list-item"]').first().click()
       cy.url().should('include', href)
