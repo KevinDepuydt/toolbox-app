@@ -10,6 +10,6 @@ export default defineConfig({
   },
   e2e: {
     baseUrl: 'http://localhost:3000',
-    supportFile: 'cypress/e2e/**/**.{ts,tsx}'
+    supportFile: 'cypress/support/e2e.ts'
   },
 })
