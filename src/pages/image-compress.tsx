@@ -37,7 +37,7 @@ export default function ImageCompressPage() {
             // update image item with output file
             updateImage(image, { outputFile: file })
           } catch (e: any) {
-            updateImage(image, { error: e.message })
+            updateImage(image, { error: e.response?.data?.error || e.message })
           }
         }
       }

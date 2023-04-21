@@ -45,8 +45,8 @@ export default async function handler(
       return res.status(200).json({ type: files[0].type, base64: buffer.toString('base64') })
     }
 
-    return res.status(400).json({ error: 'No file uploaded' })
+    return res.status(400).json({ error: 'No image have been uploaded' })
   } catch (e: any) {
-    return res.status(400).json({ error: 'Error while compressing file : ' + e.message })
+    return res.status(400).json({ error: e.message })
   }
 }
