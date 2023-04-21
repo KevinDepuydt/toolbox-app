@@ -25,6 +25,7 @@ export class ImageService {
         break
       default:
         console.log(`format ${format} not handled for image compression`)
+        throw Error('Image format not supported')
         break
     }
 
