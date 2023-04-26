@@ -4,6 +4,8 @@
 
 A toolbox web app to perform format conversions, images compression and more to come.
 
+The project is available at [https://tools.kevindepuydt.fr](https://tools.kevindepuydt.fr).
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
