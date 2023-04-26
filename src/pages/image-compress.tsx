@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { v4 as uuid } from 'uuid'
+import apiService from '@services/api'
+import fileService from '@services/file'
 import FileDropZone from '@components/file-drop-zone/file-drop-zone'
 import ImageList from '@components/image-compress/image-list/image-list'
 
@@ -14,27 +15,8 @@ export default function ImageCompressPage() {
         const image = images.find((i) => !i.done);
         if (image) {
           try {
-            // prepare image form
-            const form = new FormData()
-            form.append('image', image.inputFile)
-
-            // call image compress API
-            const { data } = await axios.post('/api/image-compress', form, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            })
-
-            // build output file from base64 src
-            const imageDataUrl = `data:${data.type};base64,${data.base64}`;
-            const res = await fetch(imageDataUrl)
-            const blob = await res.blob()
-            const parts = image.inputFile.name.split('.')
-            const ext = parts.pop()
-            const name = parts.join('.')
-            const file = new File([blob], `${name}-min.${ext}`,{ type: image.inputFile.type })
-
-            // update image item with output file
+            const { data } = await apiService.compressImage(image)
+            const file = await fileService.base64ToFile(data.base64, data.type, image.inputFile.name, '-min')
             updateImage(image, { outputFile: file })
           } catch (e: any) {
             updateImage(image, { error: e.response?.data?.error || e.message })
