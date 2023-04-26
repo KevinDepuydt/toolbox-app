@@ -1,14 +1,14 @@
 import { DownloadIcon, EyeIcon, LoadingIcon, TrashIcon } from '@components/icons'
-import { compareFilesSize, fileToDataUrl, formatFileSize } from './image-list-item.utils'
-import styles from './image-list-item.module.css'
+import { compareFilesSize, fileToDataUrl, formatFileSize } from './image-compress-list-item.utils'
+import styles from './image-compress-list-item.module.css'
 
 
-type ImageCardProps = {
+type ImageCompressListItemProps = {
   image: Image,
   onDelete: (image: Image) => void
 }
 
-export default function ImageListItem({ image, onDelete }: ImageCardProps) {
+export default function ImageCompressListItem({ image, onDelete }: ImageCompressListItemProps) {
   async function handleDownload() {
     if (image.outputFile) {
       const src = await fileToDataUrl(image.outputFile)
@@ -31,10 +31,10 @@ export default function ImageListItem({ image, onDelete }: ImageCardProps) {
   }
 
   return (
-    <div data-cy="image-list-item" className={styles.container}>
+    <div data-cy="image-compress-list-item" className={styles.container}>
       <div className={styles.details}>
-        <p data-cy="image-list-item-filename" className={styles.filename}>{image.inputFile.name}</p>
-        <p data-cy="image-list-item-status" className={styles.status}>
+        <p data-cy="filename" className={styles.filename}>{image.inputFile.name}</p>
+        <p data-cy="status" className={styles.status}>
           {!image.done && <span>Compressing image ...</span>}
           {image.done && image.outputFile && <span className={styles.successStatus}>File size is now {formatFileSize(image.outputFile)} ({compareFilesSize(image.inputFile, image.outputFile)}%)</span>}
           {image.done && !image.outputFile && <span className={styles.errorStatus}>{image.error}</span>}
@@ -42,7 +42,7 @@ export default function ImageListItem({ image, onDelete }: ImageCardProps) {
       </div>
       <div className={styles.actions}>
         <button
-          data-cy="image-list-item-preview-button"
+          data-cy="preview-button"
           onClick={handleOpen}
           disabled={!image.outputFile}
           className={styles.buttonDefault}
@@ -51,7 +51,7 @@ export default function ImageListItem({ image, onDelete }: ImageCardProps) {
           <span className="sr-only">Preview</span>
         </button>
         <button
-          data-cy="image-list-item-download-button"
+          data-cy="download-button"
           onClick={handleDownload}
           disabled={!image.done || !image.outputFile}
           className={styles.successButton}
@@ -60,7 +60,7 @@ export default function ImageListItem({ image, onDelete }: ImageCardProps) {
           <span className="sr-only">Download</span>
         </button>
         <button
-          data-cy="image-list-item-delete-button"
+          data-cy="delete-button"
           onClick={handleDelete}
           className={styles.errorButton}
         >

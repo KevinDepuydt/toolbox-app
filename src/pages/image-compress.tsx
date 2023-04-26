@@ -3,7 +3,8 @@ import { v4 as uuid } from 'uuid'
 import apiService from '@services/api'
 import fileService from '@services/file'
 import FileDropZone from '@components/file-drop-zone/file-drop-zone'
-import ImageList from '@components/image-compress/image-list/image-list'
+import ImageList from '@components/image-list/image-list'
+import ImageCompressListItem from '@components/image-compress/image-compress-list-item/image-compress-list-item'
 
 
 export default function ImageCompressPage() {
@@ -57,7 +58,11 @@ export default function ImageCompressPage() {
   return (
     <>
       <FileDropZone accept="image/*" onSelect={handleSelect} />
-      <ImageList images={images} onDelete={deleteImage} />
+      <ImageList>
+        {images.map((image) => (
+          <ImageCompressListItem key={image.id} image={image} onDelete={deleteImage} />
+        ))}
+      </ImageList>
     </>
   );
 }
