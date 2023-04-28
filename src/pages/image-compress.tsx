@@ -8,7 +8,7 @@ import ImageCompressListItem from '@components/image-compress/image-compress-lis
 
 
 export default function ImageCompressPage() {
-  const [images, setImages] = useState<Image[]>([])
+  const [images, setImages] = useState<ImageCompressState[]>([])
 
   useEffect(() => {
     (async () => {
@@ -37,7 +37,7 @@ export default function ImageCompressPage() {
     setImages((state) => [...state, { id: uuid(), inputFile: file, done: false }])
   }
 
-  function updateImage(image: Image, updates: Partial<Image>) {
+  function updateImage(image: ImageCompressState, updates: Partial<ImageCompressState>) {
     setImages(
       (arr) => arr.map(
         (item) => item.id === image.id
@@ -47,7 +47,7 @@ export default function ImageCompressPage() {
     )
   }
 
-  function deleteImage(image: Image) {
+  function deleteImage(image: ImageCompressState) {
     setImages(
       (arr) => arr.filter(
         (item) => item.id !== image.id

@@ -1,11 +1,3 @@
-export async function fileToDataUrl(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    let reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string)
-    reader.onerror = reject
-    reader.readAsDataURL(file)
-  })
-}
 
 export function compareFilesSize(inputFile: File, outputFile: File): number {
   return Math.floor((outputFile.size - inputFile.size) / inputFile.size * 100);

@@ -1,17 +1,18 @@
 import { DownloadIcon, EyeIcon, LoadingIcon, TrashIcon } from '@components/icons'
-import { compareFilesSize, fileToDataUrl, formatFileSize } from './image-compress-list-item.utils'
+import fileService from '@services/file'
+import { formatFileSize } from './image-compress-list-item.utils'
 import styles from './image-compress-list-item.module.css'
 
 
 type ImageCompressListItemProps = {
-  image: Image,
-  onDelete: (image: Image) => void
+  image: ImageCompressState,
+  onDelete: (image: ImageCompressState) => void
 }
 
 export default function ImageCompressListItem({ image, onDelete }: ImageCompressListItemProps) {
   async function handleDownload() {
     if (image.outputFile) {
-      const src = await fileToDataUrl(image.outputFile)
+      const src = await fileService.fileToDataUrl(image.outputFile)
       const link = document.createElement('a')
       link.setAttribute('href', src)
       link.setAttribute('download', image.outputFile.name)
@@ -36,7 +37,7 @@ export default function ImageCompressListItem({ image, onDelete }: ImageCompress
         <p data-cy="filename" className={styles.filename}>{image.inputFile.name}</p>
         <p data-cy="status" className={styles.status}>
           {!image.done && <span>Compressing image ...</span>}
-          {image.done && image.outputFile && <span className={styles.successStatus}>File size is now {formatFileSize(image.outputFile)} ({compareFilesSize(image.inputFile, image.outputFile)}%)</span>}
+          {image.done && image.outputFile && <span className={styles.successStatus}>File size is now {formatFileSize(image.outputFile)} ({fileService.compareFilesSize(image.inputFile, image.outputFile)}%)</span>}
           {image.done && !image.outputFile && <span className={styles.errorStatus}>{image.error}</span>}
         </p>
       </div>
