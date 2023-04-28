@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid'
+import { ImageStatus } from '@constants'
 import apiService from '@services/api'
 import fileService from '@services/file'
 import FileDropZone from '@components/file-drop-zone/file-drop-zone'
 import ImageList from '@components/image-list/image-list'
-import ImageCompressListItem from '@components/image-compress/image-compress-list-item/image-compress-list-item'
+import ImageCompressListItem from '@components/pages/image-compress/image-compress-list-item/image-compress-list-item'
 
 
 export default function ImageCompressPage() {
@@ -13,14 +14,22 @@ export default function ImageCompressPage() {
   useEffect(() => {
     (async () => {
       if (images.length) {
-        const image = images.find((i) => !i.done);
+        const image = images.find((i) => i.status === ImageStatus.NONE)
         if (image) {
           try {
+            updateImage(image, { status: ImageStatus.PROCESSING })
             const { data } = await apiService.compressImage(image)
             const file = await fileService.base64ToFile(data.base64, data.type, image.inputFile.name, '-min')
-            updateImage(image, { outputFile: file })
+            updateImage(image, {
+              status: ImageStatus.DONE,
+              outputFile: file,
+              outputFileSizeDiff: fileService.compareFilesSize(image.inputFile, file)
+            })
           } catch (e: any) {
-            updateImage(image, { error: e.response?.data?.error || e.message })
+            updateImage(image, {
+              status: ImageStatus.ERROR,
+              error: e.response?.data?.error || e.message
+            })
           }
         }
       }
@@ -34,14 +43,14 @@ export default function ImageCompressPage() {
   }
 
   function addImage(file: File) {
-    setImages((state) => [...state, { id: uuid(), inputFile: file, done: false }])
+    setImages((state) => [...state, { id: uuid(), inputFile: file, status: ImageStatus.NONE }])
   }
 
   function updateImage(image: ImageCompressState, updates: Partial<ImageCompressState>) {
     setImages(
       (arr) => arr.map(
         (item) => item.id === image.id
-          ? { ...image, ...updates, done: true }
+          ? { ...image, ...updates }
           : item
       )
     )

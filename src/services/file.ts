@@ -7,11 +7,25 @@ export class FileService {
     return new File([blob], `${name}${suffix}.${ext}`,{ type })
   }
 
+  async fileToDataUrl(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      let reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = reject
+      reader.readAsDataURL(file)
+    })
+  }
+
   parseFilename(filename: string, type: string): FileParts {
     const parts = filename.split('.')
-    const ext = parts.pop() || type.replace('image/', '')
+    parts.pop() // remove extension
+    const ext = type.replace('image/', '')
     const name = parts.join('.')
     return { name, ext }
+  }
+
+  compareFilesSize(fileA: File, fileB: File): number {
+    return Math.floor((fileB.size - fileA.size) / fileA.size * 100)
   }
 }
 

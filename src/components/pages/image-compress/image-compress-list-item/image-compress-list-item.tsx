@@ -1,5 +1,6 @@
 import { DownloadIcon, EyeIcon, LoadingIcon, TrashIcon } from '@components/icons'
 import fileService from '@services/file'
+import useImageStatus from '@hooks/image-status'
 import { formatFileSize } from './image-compress-list-item.utils'
 import styles from './image-compress-list-item.module.css'
 
@@ -10,6 +11,8 @@ type ImageCompressListItemProps = {
 }
 
 export default function ImageCompressListItem({ image, onDelete }: ImageCompressListItemProps) {
+  const { isDone, isProcessing, isError } = useImageStatus(image)
+
   async function handleDownload() {
     if (image.outputFile) {
       const src = await fileService.fileToDataUrl(image.outputFile)
@@ -36,9 +39,9 @@ export default function ImageCompressListItem({ image, onDelete }: ImageCompress
       <div className={styles.details}>
         <p data-cy="filename" className={styles.filename}>{image.inputFile.name}</p>
         <p data-cy="status" className={styles.status}>
-          {!image.done && <span>Compressing image ...</span>}
-          {image.done && image.outputFile && <span className={styles.successStatus}>File size is now {formatFileSize(image.outputFile)} ({fileService.compareFilesSize(image.inputFile, image.outputFile)}%)</span>}
-          {image.done && !image.outputFile && <span className={styles.errorStatus}>{image.error}</span>}
+          {isProcessing && <span>Compressing image ...</span>}
+          {isDone && image.outputFile && <span className={styles.successStatus}>File size is now {formatFileSize(image.outputFile)} ({image.outputFileSizeDiff}%)</span>}
+          {isError && <span className={styles.errorStatus}>{image.error}</span>}
         </p>
       </div>
       <div className={styles.actions}>
@@ -54,10 +57,10 @@ export default function ImageCompressListItem({ image, onDelete }: ImageCompress
         <button
           data-cy="download-button"
           onClick={handleDownload}
-          disabled={!image.done || !image.outputFile}
+          disabled={isDone || !image.outputFile}
           className={styles.successButton}
         >
-          {image.done ? <DownloadIcon /> : <LoadingIcon />}
+          {isDone ? <DownloadIcon /> : <LoadingIcon />}
           <span className="sr-only">Download</span>
         </button>
         <button
