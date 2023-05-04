@@ -8,7 +8,7 @@ type ImageListProps = {
 
 export default function ImageList({ children }: ImageListProps) {
   return (
-    <div data-cy="convert-image-list" className={styles.container}>
+    <div data-cy="image-list" className={styles.container}>
       {children}
     </div>
   )

@@ -1,5 +1,6 @@
 import React from 'react'
 import ImageConvertListItem from './image-convert-list-item'
+import { IMAGE_STATUS } from '@constants'
 
 
 describe('<ImageListItem />', () => {
@@ -15,94 +16,203 @@ describe('<ImageListItem />', () => {
     )
   })
 
-  context('when image item is not processed', () => {
+  context('when image output format is not selected', () => {
     beforeEach(function() {
       this.image = {
         id: 'sample-png',
         inputFile: this.pngImageFile,
         outputFile: undefined,
-        done: false,
-        error: undefined
+        outputFormat: undefined,
+        error: undefined,
+        status: IMAGE_STATUS.NONE
       }
     })
 
-    it('renders image item', function() {
-      cy.mount(<ImageConvertListItem image={this.image} onDelete={cy.stub()} />)
-      cy.get('[data-cy="image-compress-list-item"]').should('exist')
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-filename"]').should('contain.text', this.image.inputFile.name)
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-status"]').should('contain.text', 'Compressing image')
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-download-button"]').should('contain.text', 'Download').and('be.disabled')
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-preview-button"]').should('contain.text', 'Preview').and('be.disabled')
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-delete-button"]').should('contain.text', 'Delete').and('not.be.disabled')
+    it('render image item', function() {
+      cy.mount(
+        <ImageConvertListItem
+          image={this.image}
+          onDelete={cy.stub()}
+          onConvert={cy.stub()}
+          onChange={cy.stub()}
+        />
+      )
+      cy.get('[data-cy="image-convert-list-item"]').should('exist')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="filename"]').should('contain.text', this.image.inputFile.name)
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="status"]').should('contain.text', 'Select the image output format')
+      cy.get('[data-cy="image-convert-list-item"]').find('select[data-cy="output-format"]')
+        .should('exist')
+        .and('be.visible')
+        .and('contain.text', 'Select output format')
+        .and('have.value', '')
+      cy.get('[data-cy="image-convert-list-item"]').find('select[data-cy="output-format"]').find('option').should('have.length', 6)
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="convert-button"]').should('contain.text', 'Convert').and('be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="download-button"]').should('contain.text', 'Download').and('be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="preview-button"]').should('contain.text', 'Preview').and('be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="delete-button"]').should('contain.text', 'Delete').and('not.be.disabled')
     })
 
-    it('handles image item delete button click', function() {
-      const onDeleteSpy = cy.spy(cy.stub()).as('onDeleteSpy')
-      cy.mount(<ImageConvertListItem image={this.image} onDelete={onDeleteSpy} />)
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-delete-button"]').click()
-      cy.get('@onDeleteSpy').should('be.calledOnce')
-      cy.get('@onDeleteSpy').should('be.calledWith', this.image)
+    it('select output image format', function() {
+      const onChangeSpy = cy.spy().as('onChange')
+      cy.mount(
+        <ImageConvertListItem
+          image={this.image}
+          onDelete={cy.stub()}
+          onConvert={cy.stub()}
+          onChange={onChangeSpy}
+        />
+      )
+
+      cy.get('select[data-cy="output-format"]').select('jpeg')
+      cy.get('select[data-cy="output-format"]').should('have.value', 'jpeg')
+      cy.get('@onChange').should('be.calledOnce')
+      cy.get('@onChange').should('be.calledWith', this.image, { outputFormat: 'jpeg', status: IMAGE_STATUS.NONE })
     })
   })
 
-  context('when image item is processed successfully', () => {
+  context('when image output format is selected', () => {
+    beforeEach(function() {
+      this.image = {
+        id: 'sample-png',
+        inputFile: this.pngImageFile,
+        outputFile: undefined,
+        outputFormat: 'jpeg',
+        error: undefined,
+        status: IMAGE_STATUS.NONE
+      }
+    })
+
+    it('render image item with selected format', function() {
+      cy.mount(
+        <ImageConvertListItem
+          image={this.image}
+          onDelete={cy.stub()}
+          onConvert={cy.stub()}
+          onChange={cy.stub()}
+        />
+      )
+      cy.get('[data-cy="image-convert-list-item"]').should('exist')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="filename"]').should('contain.text', this.image.inputFile.name)
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="status"]').should('contain.text', 'Select the image output format')
+      cy.get('[data-cy="image-convert-list-item"]').find('select[data-cy="output-format"]')
+        .should('exist')
+        .and('be.visible')
+        .and('have.value', 'jpeg')
+      cy.get('[data-cy="image-convert-list-item"]').find('select[data-cy="output-format"]').find('option').should('have.length', 6)
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="convert-button"]').should('contain.text', 'Convert').and('not.be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="download-button"]').should('contain.text', 'Download').and('be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="preview-button"]').should('contain.text', 'Preview').and('be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="delete-button"]').should('contain.text', 'Delete').and('not.be.disabled')
+    })
+  })
+
+  context('when image is processing', () => {
+    beforeEach(function() {
+      this.image = {
+        id: 'sample-png',
+        inputFile: this.pngImageFile,
+        outputFile: undefined,
+        outputFormat: 'jpeg',
+        error: undefined,
+        status: IMAGE_STATUS.PROCESSING
+      }
+    })
+
+    it('render processing image item', function() {
+      cy.mount(
+        <ImageConvertListItem
+          image={this.image}
+          onDelete={cy.stub()}
+          onConvert={cy.stub()}
+          onChange={cy.stub()}
+        />
+      )
+      cy.get('[data-cy="image-convert-list-item"]').should('exist')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="filename"]').should('contain.text', this.image.inputFile.name)
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="status"]').should('contain.text', 'Converting image')
+      cy.get('[data-cy="image-convert-list-item"]').find('select[data-cy="output-format"]')
+        .should('exist')
+        .and('be.visible')
+        .and('be.disabled')
+        .and('have.value', 'jpeg')
+      cy.get('[data-cy="image-convert-list-item"]').find('select[data-cy="output-format"]').find('option').should('have.length', 6)
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="convert-button"]').should('contain.text', 'Convert').and('be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="download-button"]').should('contain.text', 'Download').and('be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="preview-button"]').should('contain.text', 'Preview').and('be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="delete-button"]').should('contain.text', 'Delete').and('not.be.disabled')
+    })
+  })
+
+  context('when image is processed successfully', () => {
     beforeEach(function() {
       this.image = {
         id: 'sample-png',
         inputFile: this.pngImageFile,
         outputFile: this.pngImageFile,
-        done: true,
-        error: undefined
+        outputFormat: 'jpeg',
+        error: undefined,
+        status: IMAGE_STATUS.DONE
       }
     })
 
-    it('renders image item', function() {
-      cy.mount(<ImageConvertListItem image={this.image} onDelete={cy.stub()} />)
-      cy.get('[data-cy="image-compress-list-item"]').should('exist')
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-filename"]').should('contain.text', this.image.inputFile.name)
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-status"]').should('contain.text', 'File size is now')
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-download-button"]').should('contain.text', 'Download').and('not.be.disabled')
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-preview-button"]').should('contain.text', 'Preview').and('not.be.disabled')
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-delete-button"]').should('contain.text', 'Delete').and('not.be.disabled')
-    })
-
-    it('handles image item delete button click', function() {
-      const onDeleteSpy = cy.spy(cy.stub()).as('onDeleteSpy')
-      cy.mount(<ImageConvertListItem image={this.image} onDelete={onDeleteSpy} />)
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-delete-button"]').click()
-      cy.get('@onDeleteSpy').should('be.calledOnce')
-      cy.get('@onDeleteSpy').should('be.calledWith', this.image)
+    it('render processed image item', function() {
+      cy.mount(
+        <ImageConvertListItem
+          image={this.image}
+          onDelete={cy.stub()}
+          onConvert={cy.stub()}
+          onChange={cy.stub()}
+        />
+      )
+      cy.get('[data-cy="image-convert-list-item"]').should('exist')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="filename"]').should('contain.text', this.image.inputFile.name)
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="status"]').should('contain.text', 'image generated successfully')
+      cy.get('[data-cy="image-convert-list-item"]').find('select[data-cy="output-format"]')
+        .should('exist')
+        .and('be.visible')
+        .and('not.be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('select[data-cy="output-format"]').find('option').should('have.length', 6)
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="convert-button"]').should('contain.text', 'Convert').and('be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="download-button"]').should('contain.text', 'Download').and('not.be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="preview-button"]').should('contain.text', 'Preview').and('not.be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="delete-button"]').should('contain.text', 'Delete').and('not.be.disabled')
     })
   })
 
-  context('when image item is not processed successfully', () => {
+  context('when image is not processed successfully', () => {
     beforeEach(function() {
       this.error = "Error compressing image"
       this.image = {
         id: 'sample-png',
         inputFile: this.pngImageFile,
         outputFile: undefined,
-        done: true,
-        error: this.error
+        outputFormat: 'jpeg',
+        error: this.error,
+        status: IMAGE_STATUS.ERROR
       }
     })
 
-    it('renders image item', function() {
-      cy.mount(<ImageConvertListItem image={this.image} onDelete={cy.stub()} />)
-      cy.get('[data-cy="image-compress-list-item"]').should('exist')
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-filename"]').should('contain.text', this.image.inputFile.name)
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-status"]').should('contain.text', this.error)
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-download-button"]').should('contain.text', 'Download').and('be.disabled')
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-preview-button"]').should('contain.text', 'Preview').and('be.disabled')
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-delete-button"]').should('contain.text', 'Delete').and('not.be.disabled')
-    })
-
-    it('handles image item delete button click', function() {
-      const onDeleteSpy = cy.spy(cy.stub()).as('onDeleteSpy')
-      cy.mount(<ImageConvertListItem image={this.image} onDelete={onDeleteSpy} />)
-      cy.get('[data-cy="image-compress-list-item"]').find('[data-cy="image-compress-list-item-delete-button"]').click()
-      cy.get('@onDeleteSpy').should('be.calledOnce')
-      cy.get('@onDeleteSpy').should('be.calledWith', this.image)
+    it('render processed with error image item', function() {
+      cy.mount(
+        <ImageConvertListItem
+          image={this.image}
+          onDelete={cy.stub()}
+          onConvert={cy.stub()}
+          onChange={cy.stub()}
+        />
+      )
+      cy.get('[data-cy="image-convert-list-item"]').should('exist')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="filename"]').should('contain.text', this.image.inputFile.name)
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="status"]').should('contain.text', this.error)
+      cy.get('[data-cy="image-convert-list-item"]').find('select[data-cy="output-format"]')
+        .should('exist')
+        .and('be.visible')
+        .and('not.be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('select[data-cy="output-format"]').find('option').should('have.length', 6)
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="convert-button"]').should('contain.text', 'Convert').and('not.be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="download-button"]').should('contain.text', 'Download').and('be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="preview-button"]').should('contain.text', 'Preview').and('be.disabled')
+      cy.get('[data-cy="image-convert-list-item"]').find('[data-cy="delete-button"]').should('contain.text', 'Delete').and('not.be.disabled')
     })
   })
 })

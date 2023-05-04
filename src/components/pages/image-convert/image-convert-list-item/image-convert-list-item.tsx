@@ -1,5 +1,5 @@
 import React from 'react'
-import { IMAGE_CONVERT_OUTPUT_FORMAT, ImageStatus } from '@constants'
+import { IMAGE_CONVERT_OUTPUT_FORMAT, IMAGE_STATUS, ImageStatus } from '@constants'
 import { EyeIcon, RotateIcon, DownloadIcon, LoadingIcon, TrashIcon } from '@components/icons'
 import fileService from '@services/file'
 import useImageStatus from '@hooks/image-status'
@@ -44,8 +44,7 @@ export default function ImageConvertListItem({ image, onChange, onConvert, onDel
   }
 
   function handleFormatSelect(e: React.ChangeEvent<HTMLSelectElement>) {
-    console.log('value', e.target.value)
-    onChange(image, { outputFormat: e.target.value, status: ImageStatus.NONE })
+    onChange(image, { outputFormat: e.target.value, status: IMAGE_STATUS.NONE })
   }
 
   return (
@@ -68,6 +67,8 @@ export default function ImageConvertListItem({ image, onChange, onConvert, onDel
             className={styles.select}
             onChange={handleFormatSelect}
             value={image.outputFormat}
+            disabled={isProcessing}
+            data-cy="output-format"
           >
             <option value={''}>Select output format</option>
             {availableFormats.map((format) => (

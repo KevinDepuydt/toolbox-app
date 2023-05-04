@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import apiService from '@services/api'
 import fileService from '@services/file'
-import { ImageStatus } from '@constants'
+import { IMAGE_STATUS } from '@constants'
 import FileDropZone from '@components/file-drop-zone/file-drop-zone'
 import ImageList from '@components/image-list/image-list'
 import ImageConvertListItem from '@components/pages/image-convert/image-convert-list-item/image-convert-list-item'
@@ -18,7 +18,7 @@ export default function ImageConvertPage() {
   }
 
   function addImage(file: File) {
-    setImages((state) => [...state, { id: uuid(), inputFile: file, status: ImageStatus.NONE }])
+    setImages((state) => [...state, { id: uuid(), inputFile: file, status: IMAGE_STATUS.NONE }])
   }
 
   function updateImage(image: ImageConvertState, updates: Partial<ImageConvertState>) {
@@ -33,17 +33,17 @@ export default function ImageConvertPage() {
 
   async function convertImage(image: ImageConvertState) {
     try {
-      updateImage(image, { status: ImageStatus.PROCESSING })
+      updateImage(image, { status: IMAGE_STATUS.PROCESSING })
       const { data } = await apiService.convertImage(image)
       const file = await fileService.base64ToFile(data.base64, data.type, image.inputFile.name, '-min')
       updateImage(image, {
-        status: ImageStatus.DONE,
+        status: IMAGE_STATUS.DONE,
         outputFile: file,
         outputFileSizeDiff: fileService.compareFilesSize(image.inputFile, file)
       })
     } catch (e: any) {
       updateImage(image, {
-        status: ImageStatus.ERROR,
+        status: IMAGE_STATUS.ERROR,
         error: e.response?.data?.error || e.message
       })
     }

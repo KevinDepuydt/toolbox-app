@@ -1,6 +1,7 @@
 import React from 'react'
 import ImageList from './image-list'
-import ImageCompressListItem from '@components/image-compress/image-compress-list-item/image-compress-list-item'
+import ImageCompressListItem from '@components/pages/image-compress/image-compress-list-item/image-compress-list-item'
+import { IMAGE_STATUS } from '@constants'
 
 
 function createFile(blob: Blob, fileName: string, type: string) {
@@ -23,27 +24,29 @@ describe('<ImageList />', () => {
         inputFile: pngImageFile,
         outputFile: undefined,
         done: false,
-        error: undefined
+        error: undefined,
+        status: IMAGE_STATUS.NONE
       },
       {
         id: 'sample-jpg',
         inputFile: jpgImageFile,
         outputFile: undefined,
         done: false,
-        error: undefined
+        error: undefined,
+        status: IMAGE_STATUS.NONE
       },
     ]
   })
 
   it('renders image list with no children', function () {
     cy.mount(<ImageList/>)
-    cy.get('[data-cy="convert-image-list"]').should('exist')
+    cy.get('[data-cy="image-list"]').should('exist')
   })
 
   it('renders image list with children', function () {
     cy.mount(
       <ImageList>
-        {this.images.map((image: Image, index: number) => (
+        {this.images.map((image: ImageCompressState, index: number) => (
           <ImageCompressListItem
             key={index}
             image={image}

@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'react'
-import { ImageStatus } from '@constants'
+import { IMAGE_STATUS, ImageStatus } from '@constants'
 
 
 type ImageStatusState = {
@@ -22,17 +22,18 @@ const initialState = {
 
 function imageStatusReducer(state: ImageStatusState, action: Action) {
   const newState = { isNone: false, isProcessing: false, isDone: false, isError: false }
+  console.log('imageStatusReducer', state, action)
   switch (action.type) {
-    case ImageStatus.NONE:
+    case IMAGE_STATUS.NONE:
       newState.isNone = true
       break
-    case ImageStatus.PROCESSING:
+    case IMAGE_STATUS.PROCESSING:
       newState.isProcessing = true
       break
-    case ImageStatus.DONE:
+    case IMAGE_STATUS.DONE:
       newState.isDone = true
       break
-    case ImageStatus.ERROR:
+    case IMAGE_STATUS.ERROR:
       newState.isError = true
       break
     default:
@@ -45,6 +46,7 @@ function imageStatusReducer(state: ImageStatusState, action: Action) {
 export default function useImageStatus(image: ImageState) {
   const [imageStatus, dispatch] = useReducer(imageStatusReducer, initialState)
 
+  console.log('useImageStatus', image, imageStatus)
   useEffect(() => {
     dispatch({ type: image.status })
   }, [image])

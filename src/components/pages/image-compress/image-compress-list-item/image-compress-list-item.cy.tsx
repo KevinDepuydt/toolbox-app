@@ -1,5 +1,6 @@
 import React from 'react'
 import ImageCompressListItem from './image-compress-list-item'
+import { IMAGE_STATUS } from '@constants'
 
 
 describe('<ImageCompressListItem />', () => {
@@ -21,8 +22,9 @@ describe('<ImageCompressListItem />', () => {
         id: 'sample-png',
         inputFile: this.pngImageFile,
         outputFile: undefined,
-        done: false,
-        error: undefined
+        outputFileSizeDiff: undefined,
+        error: undefined,
+        status: IMAGE_STATUS.PROCESSING
       }
     })
 
@@ -51,8 +53,9 @@ describe('<ImageCompressListItem />', () => {
         id: 'sample-png',
         inputFile: this.pngImageFile,
         outputFile: this.pngImageFile,
-        done: true,
-        error: undefined
+        outputFileSizeDiff: 0,
+        error: undefined,
+        status: IMAGE_STATUS.DONE
       }
     })
 
@@ -82,8 +85,9 @@ describe('<ImageCompressListItem />', () => {
         id: 'sample-png',
         inputFile: this.pngImageFile,
         outputFile: undefined,
-        done: true,
-        error: this.error
+        outputFileSizeDiff: undefined,
+        error: this.error,
+        status: IMAGE_STATUS.ERROR
       }
     })
 

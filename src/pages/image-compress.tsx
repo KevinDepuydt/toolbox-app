@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid'
-import { ImageStatus } from '@constants'
+import { IMAGE_STATUS, ImageStatus } from '@constants'
 import apiService from '@services/api'
 import fileService from '@services/file'
 import FileDropZone from '@components/file-drop-zone/file-drop-zone'
@@ -14,20 +14,20 @@ export default function ImageCompressPage() {
   useEffect(() => {
     (async () => {
       if (images.length) {
-        const image = images.find((i) => i.status === ImageStatus.NONE)
+        const image = images.find((i) => i.status === IMAGE_STATUS.NONE)
         if (image) {
           try {
-            updateImage(image, { status: ImageStatus.PROCESSING })
+            updateImage(image, { status: IMAGE_STATUS.PROCESSING })
             const { data } = await apiService.compressImage(image)
             const file = await fileService.base64ToFile(data.base64, data.type, image.inputFile.name, '-min')
             updateImage(image, {
-              status: ImageStatus.DONE,
+              status: IMAGE_STATUS.DONE,
               outputFile: file,
               outputFileSizeDiff: fileService.compareFilesSize(image.inputFile, file)
             })
           } catch (e: any) {
             updateImage(image, {
-              status: ImageStatus.ERROR,
+              status: IMAGE_STATUS.ERROR,
               error: e.response?.data?.error || e.message
             })
           }
@@ -43,7 +43,7 @@ export default function ImageCompressPage() {
   }
 
   function addImage(file: File) {
-    setImages((state) => [...state, { id: uuid(), inputFile: file, status: ImageStatus.NONE }])
+    setImages((state) => [...state, { id: uuid(), inputFile: file, status: IMAGE_STATUS.NONE }])
   }
 
   function updateImage(image: ImageCompressState, updates: Partial<ImageCompressState>) {

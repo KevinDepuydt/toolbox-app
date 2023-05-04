@@ -57,7 +57,7 @@ export default function ImageCompressListItem({ image, onDelete }: ImageCompress
         <button
           data-cy="download-button"
           onClick={handleDownload}
-          disabled={isDone || !image.outputFile}
+          disabled={!isDone || !image.outputFile}
           className={styles.successButton}
         >
           {isDone ? <DownloadIcon /> : <LoadingIcon />}
