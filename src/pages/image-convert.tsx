@@ -35,7 +35,7 @@ export default function ImageConvertPage() {
     try {
       updateImage(image, { status: IMAGE_STATUS.PROCESSING })
       const { data } = await apiService.convertImage(image)
-      const file = await fileService.base64ToFile(data.base64, data.type, image.inputFile.name, '-min')
+      const file = await fileService.base64ToFile(data.base64, data.type, image.inputFile.name)
       updateImage(image, {
         status: IMAGE_STATUS.DONE,
         outputFile: file,

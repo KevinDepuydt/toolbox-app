@@ -1,6 +1,6 @@
 import react from 'react'
 
-describe('compress image spec', () => {
+describe('compress image page spec', () => {
   const assetsFixturesBasePath = 'cypress/fixtures/assets'
   const error = 'Image format not supported'
 

@@ -1,5 +1,5 @@
 export class FileService {
-  async base64ToFile(base64: string, type: string, filename: string, suffix: string): Promise<File> {
+  async base64ToFile(base64: string, type: string, filename: string, suffix: string = ''): Promise<File> {
     const imageDataUrl = `data:${type};base64,${base64}`
     const res = await fetch(imageDataUrl)
     const blob = await res.blob()
