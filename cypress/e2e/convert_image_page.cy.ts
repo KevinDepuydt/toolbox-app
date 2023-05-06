@@ -4,7 +4,7 @@ describe('convert image page spec', () => {
   const outputFormat = 'jpeg'
   const nextOutputFormat = 'gif'
   const assetsFixturesBasePath = 'cypress/fixtures/assets'
-  const error = 'Image format not supported'
+  const error = 'Error converting image'
 
   before(() => {
     cy.fixture('layout').as('layout')
