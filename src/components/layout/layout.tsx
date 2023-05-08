@@ -1,6 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import { Roboto } from 'next/font/google'
+import classNames from 'classnames'
 import styles from './layout.module.css'
 import Breadcrumb from '@components/breadcrumb/breadcrumb';
 
@@ -23,7 +24,7 @@ export default function Layout({ children }: LayoutProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" type="image/png" />
       </Head>
-      <main data-cy="layout" className={`${styles.main} ${roboto.className}`}>
+      <main data-cy="layout" className={classNames(styles.main, roboto.className)}>
         <h1 data-cy="layout-title" className={styles.title}>Kevin&apos;s tools</h1>
         <p data-cy="layout-subtitle" className={styles.subtitle}>A list of tools to handle digital tasks</p>
         <Breadcrumb />
