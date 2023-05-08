@@ -1,6 +1,7 @@
 import React from 'react'
-import { IMAGE_CONVERT_OUTPUT_FORMAT, IMAGE_STATUS, ImageStatus } from '@constants'
-import { EyeIcon, RotateIcon, DownloadIcon, LoadingIcon, TrashIcon } from '@components/icons'
+import { ArrowDownTrayIcon, ArrowPathIcon, EyeIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { IMAGE_CONVERT_OUTPUT_FORMAT, IMAGE_STATUS } from '@constants'
+import { LoadingIcon } from '@components/icons'
 import fileService from '@services/file'
 import useImageStatus from '@hooks/image-status'
 import { compareFilesSize, formatFileSize } from './image-convert-list-item.utils'
@@ -86,7 +87,7 @@ export default function ImageConvertListItem({ image, onChange, onConvert, onDel
             className={styles.convertButton}
             disabled={!image.outputFormat || isProcessing || isDone}
           >
-            {isProcessing ? <LoadingIcon /> : <RotateIcon />}
+            {isProcessing ? <LoadingIcon /> : <ArrowPathIcon height={20} width={20} strokeWidth={2} />}
             <span className="sr-only">Convert</span>
           </button>
         </div>
@@ -97,7 +98,7 @@ export default function ImageConvertListItem({ image, onChange, onConvert, onDel
             disabled={!image.outputFile}
             className={styles.buttonDefault}
           >
-            <EyeIcon />
+            <EyeIcon width={20} height={20} strokeWidth={2} />
             <span className="sr-only">Preview</span>
           </button>
           <button
@@ -106,7 +107,7 @@ export default function ImageConvertListItem({ image, onChange, onConvert, onDel
             disabled={!isDone}
             className={styles.successButton}
           >
-            <DownloadIcon />
+            <ArrowDownTrayIcon width={20} height={20} strokeWidth={2} />
             <span className="sr-only">Download</span>
           </button>
           <button
@@ -114,7 +115,7 @@ export default function ImageConvertListItem({ image, onChange, onConvert, onDel
             onClick={handleDelete}
             className={styles.errorButton}
           >
-            <TrashIcon />
+            <TrashIcon width={20} height={20} strokeWidth={2} />
             <span className="sr-only">Delete</span>
           </button>
         </div>
