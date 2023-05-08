@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { ArrowIcon } from '@components/icons'
+import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import styles from './breadcrumb-item.module.css'
 
 
@@ -21,7 +21,7 @@ export default function BreadcrumbItem({ item, last = false }: BreadcrumbItemPro
   return (
     <div data-cy="breadcrumb-item" className={styles.container}>
       <Link href={item.path} className={styles.link}>{item.label}</Link>
-      <ArrowIcon className={styles.icon} />
+      <ChevronRightIcon width={15} height={15} strokeWidth={2} className={styles.icon} />
     </div>
   )
 }

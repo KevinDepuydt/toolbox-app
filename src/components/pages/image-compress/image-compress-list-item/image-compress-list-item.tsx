@@ -1,8 +1,10 @@
-import { DownloadIcon, EyeIcon, LoadingIcon, TrashIcon } from '@components/icons'
+import { ArrowPathIcon, EyeIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { LoadingIcon } from '@components/icons'
 import fileService from '@services/file'
 import useImageStatus from '@hooks/image-status'
 import { formatFileSize } from './image-compress-list-item.utils'
 import styles from './image-compress-list-item.module.css'
+import React from 'react'
 
 
 type ImageCompressListItemProps = {
@@ -51,7 +53,7 @@ export default function ImageCompressListItem({ image, onDelete }: ImageCompress
           disabled={!image.outputFile}
           className={styles.buttonDefault}
         >
-          <EyeIcon />
+          <EyeIcon width={20} height={20} strokeWidth={2} />
           <span className="sr-only">Preview</span>
         </button>
         <button
@@ -60,7 +62,7 @@ export default function ImageCompressListItem({ image, onDelete }: ImageCompress
           disabled={!isDone || !image.outputFile}
           className={styles.successButton}
         >
-          {isDone ? <DownloadIcon /> : <LoadingIcon />}
+          {isDone ? <ArrowPathIcon height={20} width={20} strokeWidth={2} /> : <LoadingIcon />}
           <span className="sr-only">Download</span>
         </button>
         <button
@@ -68,7 +70,7 @@ export default function ImageCompressListItem({ image, onDelete }: ImageCompress
           onClick={handleDelete}
           className={styles.errorButton}
         >
-          <TrashIcon />
+          <TrashIcon width={20} height={20} strokeWidth={2} />
           <span className="sr-only">Delete</span>
         </button>
       </div>
