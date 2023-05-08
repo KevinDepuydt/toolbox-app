@@ -40,9 +40,10 @@ export default async function handler(
 ) {
   try {
     const files = await parseFiles(req, res)
+    const { outputFormat } = req.body
     if (files.length > 0) {
-      const buffer = await imageService.compress(files[0])
-      return res.status(200).json({ type: files[0].mimetype, base64: buffer.toString('base64') })
+      const buffer = await imageService.convert(files[0], outputFormat)
+      return res.status(200).json({ type: `image/${outputFormat}`, base64: buffer.toString('base64') })
     }
 
     return res.status(400).json({ error: 'No image have been uploaded' })

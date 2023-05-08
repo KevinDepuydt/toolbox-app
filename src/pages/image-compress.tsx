@@ -1,43 +1,35 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { v4 as uuid } from 'uuid'
+import { IMAGE_STATUS, ImageStatus } from '@constants'
+import apiService from '@services/api'
+import fileService from '@services/file'
 import FileDropZone from '@components/file-drop-zone/file-drop-zone'
-import ImageList from '@components/image-compress/image-list/image-list'
+import ImageList from '@components/image-list/image-list'
+import ImageCompressListItem from '@components/pages/image-compress/image-compress-list-item/image-compress-list-item'
 
 
 export default function ImageCompressPage() {
-  const [images, setImages] = useState<Image[]>([])
+  const [images, setImages] = useState<ImageCompressState[]>([])
 
   useEffect(() => {
     (async () => {
       if (images.length) {
-        const image = images.find((i) => !i.done);
+        const image = images.find((i) => i.status === IMAGE_STATUS.NONE)
         if (image) {
           try {
-            // prepare image form
-            const form = new FormData()
-            form.append('image', image.inputFile)
-
-            // call image compress API
-            const { data } = await axios.post('/api/image-compress', form, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
+            updateImage(image, { status: IMAGE_STATUS.PROCESSING })
+            const { data } = await apiService.compressImage(image)
+            const file = await fileService.base64ToFile(data.base64, data.type, image.inputFile.name, '-min')
+            updateImage(image, {
+              status: IMAGE_STATUS.DONE,
+              outputFile: file,
+              outputFileSizeDiff: fileService.compareFilesSize(image.inputFile, file)
             })
-
-            // build output file from base64 src
-            const imageDataUrl = `data:${data.type};base64,${data.base64}`;
-            const res = await fetch(imageDataUrl)
-            const blob = await res.blob()
-            const parts = image.inputFile.name.split('.')
-            const ext = parts.pop()
-            const name = parts.join('.')
-            const file = new File([blob], `${name}-min.${ext}`,{ type: image.inputFile.type })
-
-            // update image item with output file
-            updateImage(image, { outputFile: file })
           } catch (e: any) {
-            updateImage(image, { error: e.response?.data?.error || e.message })
+            updateImage(image, {
+              status: IMAGE_STATUS.ERROR,
+              error: e.response?.data?.error || e.message
+            })
           }
         }
       }
@@ -51,20 +43,20 @@ export default function ImageCompressPage() {
   }
 
   function addImage(file: File) {
-    setImages((state) => [...state, { id: uuid(), inputFile: file, done: false }])
+    setImages((state) => [...state, { id: uuid(), inputFile: file, status: IMAGE_STATUS.NONE }])
   }
 
-  function updateImage(image: Image, updates: Partial<Image>) {
+  function updateImage(image: ImageCompressState, updates: Partial<ImageCompressState>) {
     setImages(
       (arr) => arr.map(
         (item) => item.id === image.id
-          ? { ...image, ...updates, done: true }
+          ? { ...image, ...updates }
           : item
       )
     )
   }
 
-  function deleteImage(image: Image) {
+  function deleteImage(image: ImageCompressState) {
     setImages(
       (arr) => arr.filter(
         (item) => item.id !== image.id
@@ -75,7 +67,11 @@ export default function ImageCompressPage() {
   return (
     <>
       <FileDropZone accept="image/*" onSelect={handleSelect} />
-      <ImageList images={images} onDelete={deleteImage} />
+      <ImageList>
+        {images.map((image) => (
+          <ImageCompressListItem key={image.id} image={image} onDelete={deleteImage} />
+        ))}
+      </ImageList>
     </>
   );
 }

@@ -1,6 +1,6 @@
 import react from 'react'
 
-describe('compress image spec', () => {
+describe('compress image page spec', () => {
   const assetsFixturesBasePath = 'cypress/fixtures/assets'
   const error = 'Image format not supported'
 
@@ -37,7 +37,7 @@ describe('compress image spec', () => {
   context('when no images have been selected', () => {
     it('renders an empty image list', () => {
       cy.get('[data-cy="image-list"]').should('exist').and('not.be.visible')
-      cy.get('[data-cy="image-list-item"]').should('not.exist')
+      cy.get('[data-cy="image-compress-list-item"]').should('not.exist')
     })
   })
 
@@ -66,29 +66,29 @@ describe('compress image spec', () => {
 
     it('renders the processing images', () => {
       cy.get('[data-cy="image-list"]').should('be.visible')
-      cy.get('[data-cy="image-list-item"]').should('have.length', filenames.length)
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-filename"]').should('contain.text', filenames[0])
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-status"]').should('contain.text', 'Compressing image')
+      cy.get('[data-cy="image-compress-list-item"]').should('have.length', filenames.length)
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="filename"]').should('contain.text', filenames[0])
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="status"]').should('contain.text', 'Compressing image')
     })
 
     it('does not handle image download', () => {
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-download-button"]')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="download-button"]')
         .should('contain.text', 'Download')
         .and('be.disabled')
     })
 
     it('does not handle image preview', () => {
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-preview-button"]')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="preview-button"]')
         .should('contain.text', 'Preview')
         .and('be.disabled')
     })
 
     it('handles image delete', () => {
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-delete-button"]')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="delete-button"]')
         .should('contain.text', 'Delete')
         .and('not.be.disabled')
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-delete-button"]').click()
-      cy.get('[data-cy="image-list-item"]').should('not.exist')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="delete-button"]').click()
+      cy.get('[data-cy="image-compress-list-item"]').should('not.exist')
     })
   })
 
@@ -117,29 +117,29 @@ describe('compress image spec', () => {
 
     it('renders the processed images', () => {
       cy.get('[data-cy="image-list"]').should('be.visible')
-      cy.get('[data-cy="image-list-item"]').should('have.length', filenames.length)
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-filename"]').should('contain.text', filenames[0])
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-status"]').should('contain.text', 'File size is now')
+      cy.get('[data-cy="image-compress-list-item"]').should('have.length', filenames.length)
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="filename"]').should('contain.text', filenames[0])
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="status"]').should('contain.text', 'File size is now')
     })
 
     it('handles image download', () => {
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-download-button"]')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="download-button"]')
         .should('contain.text', 'Download')
         .and('not.be.disabled')
     })
 
     it('handles image preview', () => {
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-preview-button"]')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="preview-button"]')
         .should('contain.text', 'Preview')
         .and('not.be.disabled')
     })
 
     it('handles image delete', () => {
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-delete-button"]')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="delete-button"]')
         .should('contain.text', 'Delete')
         .and('not.be.disabled')
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-delete-button"]').click()
-      cy.get('[data-cy="image-list-item"]').should('not.exist')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="delete-button"]').click()
+      cy.get('[data-cy="image-compress-list-item"]').should('not.exist')
     })
   })
 
@@ -165,29 +165,29 @@ describe('compress image spec', () => {
 
     it('renders the processed images', () => {
       cy.get('[data-cy="image-list"]').should('be.visible')
-      cy.get('[data-cy="image-list-item"]').should('have.length', filenames.length)
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-filename"]').should('contain.text', filenames[0])
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-status"]').should('contain.text', error)
+      cy.get('[data-cy="image-compress-list-item"]').should('have.length', filenames.length)
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="filename"]').should('contain.text', filenames[0])
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="status"]').should('contain.text', error)
     })
 
     it('does not handle image download', () => {
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-download-button"]')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="download-button"]')
         .should('contain.text', 'Download')
         .and('be.disabled')
     })
 
     it('does not handle image preview', () => {
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-preview-button"]')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="preview-button"]')
         .should('contain.text', 'Preview')
         .and('be.disabled')
     })
 
     it('handles image delete', () => {
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-delete-button"]')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="delete-button"]')
         .should('contain.text', 'Delete')
         .and('not.be.disabled')
-      cy.get('[data-cy="image-list-item"]').first().find('[data-cy="image-list-item-delete-button"]').click()
-      cy.get('[data-cy="image-list-item"]').should('not.exist')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="delete-button"]').click()
+      cy.get('[data-cy="image-compress-list-item"]').should('not.exist')
     })
   })
 })
