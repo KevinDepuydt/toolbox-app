@@ -22,7 +22,6 @@ export default function Alert({ type, message, discreet = false }: AlertProps) {
   return (
     <div
       data-cy="alert"
-      data-alert-type={type}
       className={classNames(
         styles[type],
         styles.container,
