@@ -70,7 +70,7 @@ describe('convert image page spec', () => {
       cy.get('[data-cy="image-list"]').should('be.visible')
       cy.get('[data-cy="image-convert-list-item"]').should('have.length', filenames.length)
       cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="filename"]').should('contain.text', filenames[0])
-      cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="status"]').should('contain.text', 'Select the image output format')
+      cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="alert"]').should('contain.text', 'Select the image output format')
     })
 
     it('renders the right image output format options', () => {
@@ -147,7 +147,7 @@ describe('convert image page spec', () => {
       cy.get('[data-cy="image-list"]').should('be.visible')
       cy.get('[data-cy="image-convert-list-item"]').should('have.length', filenames.length)
       cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="filename"]').should('contain.text', filenames[0])
-      cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="status"]').should('contain.text', 'Converting image')
+      cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="alert"]').should('contain.text', 'Converting image')
     })
 
     it('does not handle image output format change', () => {
@@ -214,7 +214,7 @@ describe('convert image page spec', () => {
       cy.get('[data-cy="image-list"]').should('be.visible')
       cy.get('[data-cy="image-convert-list-item"]').should('have.length', filenames.length)
       cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="filename"]').should('contain.text', filenames[0])
-      cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="status"]').should('contain.text', 'image generated successfully')
+      cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="alert"]').should('contain.text', 'image generated successfully')
     })
 
     it('handles image output format change', () => {
@@ -283,7 +283,7 @@ describe('convert image page spec', () => {
       cy.get('[data-cy="image-list"]').should('be.visible')
       cy.get('[data-cy="image-convert-list-item"]').should('have.length', filenames.length)
       cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="filename"]').should('contain.text', filenames[0])
-      cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="status"]').should('contain.text', error)
+      cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="alert"]').should('contain.text', error)
     })
 
     it('handles image output format change', () => {

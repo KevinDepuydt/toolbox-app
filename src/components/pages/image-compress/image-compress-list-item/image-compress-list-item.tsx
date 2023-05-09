@@ -1,10 +1,11 @@
-import { ArrowPathIcon, EyeIcon, TrashIcon } from '@heroicons/react/24/outline'
-import { LoadingIcon } from '@components/icons'
+import { useEffect, useReducer } from 'react'
+import { ArrowDownTrayIcon, EyeIcon, TrashIcon } from '@heroicons/react/24/outline'
 import fileService from '@services/file'
 import useImageStatus from '@hooks/image-status'
-import { formatFileSize } from './image-compress-list-item.utils'
+import { LoadingIcon } from '@components/icons'
+import Alert from '@components/alert/alert'
+import { initialState, reducer } from './image-compress-list-item.reducer'
 import styles from './image-compress-list-item.module.css'
-import React from 'react'
 
 
 type ImageCompressListItemProps = {
@@ -14,6 +15,11 @@ type ImageCompressListItemProps = {
 
 export default function ImageCompressListItem({ image, onDelete }: ImageCompressListItemProps) {
   const { isDone, isProcessing, isError } = useImageStatus(image)
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  useEffect(() => {
+    dispatch({ type: image.status, image })
+  }, [image])
 
   async function handleDownload() {
     if (image.outputFile) {
@@ -40,11 +46,11 @@ export default function ImageCompressListItem({ image, onDelete }: ImageCompress
     <div data-cy="image-compress-list-item" className={styles.container}>
       <div className={styles.details}>
         <p data-cy="filename" className={styles.filename}>{image.inputFile.name}</p>
-        <p data-cy="status" className={styles.status}>
-          {isProcessing && <span>Compressing image ...</span>}
-          {isDone && image.outputFile && <span className={styles.successStatus}>File size is now {formatFileSize(image.outputFile)} ({image.outputFileSizeDiff}%)</span>}
-          {isError && <span className={styles.errorStatus}>{image.error}</span>}
-        </p>
+        <Alert
+          type={state.alertType}
+          message={state.alertMessage}
+          discreet={true}
+        />
       </div>
       <div className={styles.actions}>
         <button
@@ -62,7 +68,7 @@ export default function ImageCompressListItem({ image, onDelete }: ImageCompress
           disabled={!isDone || !image.outputFile}
           className={styles.successButton}
         >
-          {isDone ? <ArrowPathIcon height={20} width={20} strokeWidth={2} /> : <LoadingIcon />}
+          {isDone ? <ArrowDownTrayIcon height={20} width={20} strokeWidth={2} /> : <LoadingIcon />}
           <span className="sr-only">Download</span>
         </button>
         <button

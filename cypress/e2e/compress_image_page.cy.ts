@@ -68,7 +68,7 @@ describe('compress image page spec', () => {
       cy.get('[data-cy="image-list"]').should('be.visible')
       cy.get('[data-cy="image-compress-list-item"]').should('have.length', filenames.length)
       cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="filename"]').should('contain.text', filenames[0])
-      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="status"]').should('contain.text', 'Compressing image')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="alert"]').should('contain.text', 'Compressing image')
     })
 
     it('does not handle image download', () => {
@@ -119,7 +119,7 @@ describe('compress image page spec', () => {
       cy.get('[data-cy="image-list"]').should('be.visible')
       cy.get('[data-cy="image-compress-list-item"]').should('have.length', filenames.length)
       cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="filename"]').should('contain.text', filenames[0])
-      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="status"]').should('contain.text', 'File size is now')
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="alert"]').should('contain.text', 'File size is now')
     })
 
     it('handles image download', () => {
@@ -167,7 +167,7 @@ describe('compress image page spec', () => {
       cy.get('[data-cy="image-list"]').should('be.visible')
       cy.get('[data-cy="image-compress-list-item"]').should('have.length', filenames.length)
       cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="filename"]').should('contain.text', filenames[0])
-      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="status"]').should('contain.text', error)
+      cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="alert"]').should('contain.text', error)
     })
 
     it('does not handle image download', () => {
