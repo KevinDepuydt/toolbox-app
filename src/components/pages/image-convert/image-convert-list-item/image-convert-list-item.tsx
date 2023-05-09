@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { ArrowDownTrayIcon, ArrowPathIcon, EyeIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { IMAGE_CONVERT_OUTPUT_FORMAT, IMAGE_STATUS } from '@constants'
-import { LoadingIcon } from '@components/icons'
 import fileService from '@services/file'
 import useImageStatus from '@hooks/image-status'
-import { compareFilesSize, formatFileSize } from './image-convert-list-item.utils'
+import { LoadingIcon } from '@components/icons'
+import Alert from '@components/alert/alert'
+import { initialState, reducer } from './image-convert-list-item.reducer'
 import styles from './image-convert-list-item.module.css'
 
 
@@ -16,8 +17,14 @@ type ImageConvertListItemProps = {
 }
 
 export default function ImageConvertListItem({ image, onChange, onConvert, onDelete }: ImageConvertListItemProps) {
-  const { isNone, isProcessing, isDone, isError } = useImageStatus(image)
+  const { isProcessing, isDone } = useImageStatus(image)
+  const [state, dispatch] = useReducer(reducer, initialState)
   const availableFormats = IMAGE_CONVERT_OUTPUT_FORMAT.filter((format) => image.inputFile.type.replace('image/', '') !== format)
+
+  useEffect(() => {
+    console.log('update state effect')
+    dispatch({ type: image.status, image })
+  }, [image])
 
   async function handleDownload() {
     if (image.outputFile) {
@@ -52,14 +59,11 @@ export default function ImageConvertListItem({ image, onChange, onConvert, onDel
     <div data-cy="image-convert-list-item" className={styles.container}>
       <div className={styles.details}>
         <p data-cy="filename" title={image.inputFile.name} className={styles.filename}>{image.inputFile.name}</p>
-        <p data-cy="status" className={styles.status}>
-          {isNone && <span>Select the image output format below then click the convert button</span>}
-          {isProcessing && <span>Converting image ...</span>}
-          {isDone && image.outputFile && <span className={styles.successStatus}>
-            <span className="uppercase">{image.outputFormat}</span> image generated successfully, output image size is {formatFileSize(image.outputFile)} ({compareFilesSize(image.inputFile, image.outputFile)}%)
-          </span>}
-          {isError && <span className={styles.errorStatus}>{image.error}</span>}
-        </p>
+        <Alert
+          type={state.alertType}
+          message={state.alertMessage}
+          discreet={true}
+        />
       </div>
       <div className={styles.actions}>
         <div className={styles.formatSelect}>
