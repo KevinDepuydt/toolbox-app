@@ -1,0 +1,27 @@
+.container {
+  @apply flex items-center px-2 py-3 rounded-md my-1 text-sm;
+}
+
+.discreet {
+  @apply bg-transparent px-0 py-0.5 !important;
+}
+
+.success {
+  @apply bg-green-100 text-green-500;
+}
+
+.error {
+  @apply bg-red-100 text-red-400;
+}
+
+.warning {
+  @apply bg-orange-100 text-orange-400;
+}
+
+.info {
+  @apply bg-blue-100 text-blue-400;
+}
+
+.message {
+  @apply ml-1;
+}
