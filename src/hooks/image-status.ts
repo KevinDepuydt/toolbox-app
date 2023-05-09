@@ -22,7 +22,6 @@ const initialState = {
 
 function imageStatusReducer(state: ImageStatusState, action: Action) {
   const newState = { isNone: false, isProcessing: false, isDone: false, isError: false }
-  console.log('imageStatusReducer', state, action)
   switch (action.type) {
     case IMAGE_STATUS.NONE:
       newState.isNone = true
@@ -46,7 +45,6 @@ function imageStatusReducer(state: ImageStatusState, action: Action) {
 export default function useImageStatus(image: ImageState) {
   const [imageStatus, dispatch] = useReducer(imageStatusReducer, initialState)
 
-  console.log('useImageStatus', image, imageStatus)
   useEffect(() => {
     dispatch({ type: image.status })
   }, [image])
