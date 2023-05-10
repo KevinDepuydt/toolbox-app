@@ -59,8 +59,13 @@ export default function NotificationItem({ notification, onDelete }: Notificatio
       onExited={handleDelete}
     >
       <div ref={nodeRef} className={classNames(styles.container, styles[notification.type])} onClick={hide}>
-        <span>{NOTIFICATION_ICONS[notification.type]}</span>
-        <span className={styles.message}>{notification.message}</span>
+        <span className={classNames({ 'mt-0.5': !!notification.title })}>
+          {NOTIFICATION_ICONS[notification.type]}
+        </span>
+        <div className={styles.content}>
+          {notification.title && (<h6 className={styles.title}>{notification.title}</h6>)}
+          <p className={styles.message}>{notification.message}</p>
+        </div>
       </div>
     </CSSTransition>
   )
