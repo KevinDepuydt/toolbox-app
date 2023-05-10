@@ -6,9 +6,11 @@ import { IMAGE_STATUS } from '@constants'
 import FileDropZone from '@components/file-drop-zone/file-drop-zone'
 import ImageList from '@components/image-list/image-list'
 import ImageConvertListItem from '@components/pages/image-convert/image-convert-list-item/image-convert-list-item'
+import { useNotifications } from '@contexts/notifications'
 
 
 export default function ImageConvertPage() {
+  const notify = useNotifications()
   const [images, setImages] = useState<ImageConvertState[]>([])
 
   function handleSelect(files: File[]) {
@@ -41,10 +43,18 @@ export default function ImageConvertPage() {
         outputFile: file,
         outputFileSizeDiff: fileService.compareFilesSize(image.inputFile, file)
       })
+      notify.success({
+        title: 'Your image is ready',
+        message: `the image "${image.inputFile.name}" have been converted successfully`
+      })
     } catch (e: any) {
       updateImage(image, {
         status: IMAGE_STATUS.ERROR,
         error: e.response?.data?.error || e.message
+      })
+      notify.error({
+        title: 'Oops',
+        message: `the image "${image.inputFile.name}" conversion failed`
       })
     }
   }
