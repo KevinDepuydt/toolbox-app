@@ -217,6 +217,14 @@ describe('convert image page spec', () => {
       cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="alert"]').should('contain.text', 'image generated successfully')
     })
 
+    it('renders a success notification', () => {
+      cy.get('[data-cy="notification-item"]')
+        .should('be.visible')
+        .and('have.attr', 'data-notification-type', 'success')
+      cy.get('[data-cy="notification-item"]').find('[data-cy="title"]').should('contain.text', 'Your image is ready')
+      cy.get('[data-cy="notification-item"]').find('[data-cy="message"]').should('contain.text', `the image "${filenames[0]}" have been converted successfully`)
+    })
+
     it('handles image output format change', () => {
       cy.get('[data-cy="image-convert-list-item"]').first().find('select[data-cy="output-format"]').select(nextOutputFormat)
       cy.get('[data-cy="image-convert-list-item"]').first().find('select[data-cy="output-format"]')
@@ -284,6 +292,14 @@ describe('convert image page spec', () => {
       cy.get('[data-cy="image-convert-list-item"]').should('have.length', filenames.length)
       cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="filename"]').should('contain.text', filenames[0])
       cy.get('[data-cy="image-convert-list-item"]').first().find('[data-cy="alert"]').should('contain.text', error)
+    })
+
+    it('renders an error notification', () => {
+      cy.get('[data-cy="notification-item"]')
+        .should('be.visible')
+        .and('have.attr', 'data-notification-type', 'error')
+      cy.get('[data-cy="notification-item"]').find('[data-cy="title"]').should('contain.text', 'Oops')
+      cy.get('[data-cy="notification-item"]').find('[data-cy="message"]').should('contain.text', `the image "${filenames[0]}" conversion failed`)
     })
 
     it('handles image output format change', () => {

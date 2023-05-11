@@ -58,7 +58,7 @@ export default function NotificationItem({ notification, onDelete }: Notificatio
       onEntered={handleEntered}
       onExited={handleDelete}
     >
-      <div data-cy="notification-item" ref={nodeRef} className={classNames(styles.container, styles[notification.type])} onClick={hide}>
+      <div data-cy="notification-item" data-notification-type={notification.type} ref={nodeRef} className={classNames(styles.container, styles[notification.type])} onClick={hide}>
         <span className={classNames({ 'mt-0.5': !!notification.title })}>
           {NOTIFICATION_ICONS[notification.type]}
         </span>

@@ -1,5 +1,6 @@
 import react from 'react'
 
+
 describe('compress image page spec', () => {
   const assetsFixturesBasePath = 'cypress/fixtures/assets'
   const error = 'Image format not supported'
@@ -122,6 +123,14 @@ describe('compress image page spec', () => {
       cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="alert"]').should('contain.text', 'File size is now')
     })
 
+    it('renders a success notification', () => {
+      cy.get('[data-cy="notification-item"]')
+        .should('be.visible')
+        .and('have.attr', 'data-notification-type', 'success')
+      cy.get('[data-cy="notification-item"]').find('[data-cy="title"]').should('contain.text', 'Your image is ready')
+      cy.get('[data-cy="notification-item"]').find('[data-cy="message"]').should('contain.text', `the image "${filenames[0]}" have been compressed successfully`)
+    })
+
     it('handles image download', () => {
       cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="download-button"]')
         .should('contain.text', 'Download')
@@ -168,6 +177,14 @@ describe('compress image page spec', () => {
       cy.get('[data-cy="image-compress-list-item"]').should('have.length', filenames.length)
       cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="filename"]').should('contain.text', filenames[0])
       cy.get('[data-cy="image-compress-list-item"]').first().find('[data-cy="alert"]').should('contain.text', error)
+    })
+
+    it('renders an error notification', () => {
+      cy.get('[data-cy="notification-item"]')
+        .should('be.visible')
+        .and('have.attr', 'data-notification-type', 'error')
+      cy.get('[data-cy="notification-item"]').find('[data-cy="title"]').should('contain.text', 'Oops')
+      cy.get('[data-cy="notification-item"]').find('[data-cy="message"]').should('contain.text', `the image "${filenames[0]}" compression failed`)
     })
 
     it('does not handle image download', () => {
