@@ -4,13 +4,10 @@ import styles from './notification-item.module.css'
 
 describe('<NotificationItem />', () => {
   beforeEach(function() {
-    cy.fixture('notifications').then((notifications) => {
-      this.notifications = notifications
-    })
+    cy.fixture('notifications').as('notifications')
   })
 
   it('renders info notification', function () {
-    console.log('notifications', this.notifications)
     const { infoNotification: notification } = this.notifications
     cy.mount(<NotificationItem notification={notification} onDelete={cy.stub()} />)
     cy.get('[data-cy="notification-item"]').should('be.visible')
@@ -20,7 +17,6 @@ describe('<NotificationItem />', () => {
   })
 
   it('renders info notification with title', function () {
-    console.log('notifications', this.notifications)
     const { infoNotificationWithTitle: notification } = this.notifications
     cy.mount(<NotificationItem notification={notification} onDelete={cy.stub()} />)
     cy.get('[data-cy="notification-item"]').should('be.visible')

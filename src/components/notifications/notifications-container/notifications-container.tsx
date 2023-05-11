@@ -10,7 +10,7 @@ type NotificationsContainerProps = {
 
 export default function NotificationsContainer({ notifications, onDelete }: NotificationsContainerProps) {
   return (
-    <div className={styles.container}>
+    <div data-cy="notifications-container" className={styles.container}>
       {notifications.map((notification) => (
         <NotificationItem
           key={notification.id}
