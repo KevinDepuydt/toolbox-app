@@ -1,0 +1,46 @@
+{
+  "infoNotification": {
+    "id": "1",
+    "type": "info",
+    "message": "info notification message"
+  },
+  "infoNotificationWithTitle": {
+    "id": "2",
+    "type": "info",
+    "title": "info notification title",
+    "message": "info notification message"
+  },
+  "successNotification": {
+    "id": "3",
+    "type": "success",
+    "message": "success notification message"
+  },
+  "successNotificationWithTitle": {
+    "id": "4",
+    "type": "success",
+    "title": "success notification title",
+    "message": "success notification message"
+  },
+  "warningNotification": {
+    "id": "5",
+    "type": "warning",
+    "message": "warning notification message"
+  },
+  "warningNotificationWithTitle": {
+    "id": "6",
+    "type": "warning",
+    "title": "warning notification title",
+    "message": "warning notification message"
+  },
+  "errorNotification": {
+    "id": "7",
+    "type": "error",
+    "message": "error notification message"
+  },
+  "errorNotificationWithTitle": {
+    "id": "8",
+    "type": "error",
+    "title": "error notification title",
+    "message": "error notification message"
+  }
+}

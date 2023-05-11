@@ -6,9 +6,11 @@ import fileService from '@services/file'
 import FileDropZone from '@components/file-drop-zone/file-drop-zone'
 import ImageList from '@components/image-list/image-list'
 import ImageCompressListItem from '@components/pages/image-compress/image-compress-list-item/image-compress-list-item'
+import { useNotifications } from '@contexts/notifications'
 
 
 export default function ImageCompressPage() {
+  const notify = useNotifications()
   const [images, setImages] = useState<ImageCompressState[]>([])
 
   useEffect(() => {
@@ -25,10 +27,18 @@ export default function ImageCompressPage() {
               outputFile: file,
               outputFileSizeDiff: fileService.compareFilesSize(image.inputFile, file)
             })
+            notify.success({
+              title: 'Your image is ready',
+              message: `the image "${image.inputFile.name}" have been compressed successfully`
+            })
           } catch (e: any) {
             updateImage(image, {
               status: IMAGE_STATUS.ERROR,
               error: e.response?.data?.error || e.message
+            })
+            notify.error({
+              title: 'Oops',
+              message: `the image "${image.inputFile.name}" compression failed`
             })
           }
         }

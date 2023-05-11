@@ -1,0 +1,52 @@
+.container {
+  @apply flex items-start px-3 py-3 rounded-md cursor-pointer max-w-md mb-1;
+}
+
+.success {
+  @apply bg-green-100 text-green-500;
+}
+
+.error {
+  @apply bg-red-100 text-red-400;
+}
+
+.warning {
+  @apply bg-orange-100 text-orange-400;
+}
+
+.info {
+  @apply bg-blue-100 text-blue-400;
+}
+
+.content {
+  @apply ml-1;
+}
+
+.title {
+  @apply font-semibold;
+}
+
+.message {
+  @apply text-sm break-all;
+}
+
+.enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.enterActive {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 800ms, transform 800ms;
+}
+
+.exit {
+  opacity: 1;
+}
+
+.exitActive {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 800ms, transform 800ms;
+}
