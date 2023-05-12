@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import { pluralize } from '@utils/strings'
 import styles from './file-drop-zone.module.css'
 
 
@@ -90,7 +91,7 @@ export default function FileDropZone({ accept, children, onSelect, multiple = tr
         data-cy="file-drop-zone-message"
         className={styles.help}
       >
-        Drop files here or click to select
+        Drop {pluralize(multiple ? 0 : 1, 'file')} here or click to select
       </p>
       {children}
     </div>
