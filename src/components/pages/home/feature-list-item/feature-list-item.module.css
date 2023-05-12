@@ -1,11 +1,11 @@
 .container {
-  @apply p-4 rounded-md shadow-md bg-white border border-slate-100 text-slate-600 hover:text-slate-900 dark:bg-slate-700 dark:border-slate-600 dark:hover:bg-slate-600 dark:text-slate-100 dark:hover:text-slate-50;
+  @apply p-4 rounded-md shadow-md bg-white text-slate-600 hover:text-slate-900 dark:bg-slate-700 dark:border-slate-600 dark:hover:bg-slate-600 dark:text-slate-100 dark:hover:text-slate-50;
 }
 
 .title {
-  @apply font-bold text-lg;
+  @apply font-semibold text-lg;
 }
 
 .description {
-  @apply text-sm text-slate-400 dark:text-slate-300;
+  @apply font-light text-sm text-slate-400 dark:text-slate-300;
 }
