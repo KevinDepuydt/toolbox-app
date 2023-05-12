@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid'
-import { IMAGE_STATUS, ImageStatus } from '@constants'
+import { IMAGE_STATUS } from '@constants'
 import apiService from '@services/api'
 import fileService from '@services/file'
 import FileDropZone from '@components/file-drop-zone/file-drop-zone'
