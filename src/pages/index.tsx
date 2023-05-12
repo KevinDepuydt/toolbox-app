@@ -24,6 +24,11 @@ export async function getStaticProps() {
           name: 'Image Convert',
           description: 'Convert images format',
           path: '/image-convert'
+        },
+        {
+          name: 'PDF Sign',
+          description: 'Sign PDF documents',
+          path: '/pdf-sign'
         }
       ]
     }
