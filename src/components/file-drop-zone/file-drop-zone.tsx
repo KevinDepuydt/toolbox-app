@@ -4,11 +4,12 @@ import styles from './file-drop-zone.module.css'
 
 type FileDropZoneProps = {
   accept: string
+  multiple?: boolean
   children?: React.ReactNode
   onSelect: (files: File[]) => void
 }
 
-export default function FileDropZone({ accept, children, onSelect }: FileDropZoneProps) {
+export default function FileDropZone({ accept, children, onSelect, multiple = true }: FileDropZoneProps) {
   const input = useRef<HTMLInputElement>(null)
 
   /**
@@ -79,7 +80,7 @@ export default function FileDropZone({ accept, children, onSelect }: FileDropZon
       <input
         data-cy="file-drop-zone-input"
         type="file"
-        multiple={true}
+        multiple={multiple}
         ref={input}
         onChange={handleChange}
         accept={accept}
