@@ -11,6 +11,7 @@ type PdfSignWrapperProps = {
 }
 
 export default function PdfSignWrapper({ file, onFileSelect }: PdfSignWrapperProps) {
+  console.log('PdfSignWrapper: render')
   return (
     <div className={styles.wrapper}>
       {file ? (

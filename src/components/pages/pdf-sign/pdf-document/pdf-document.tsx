@@ -8,6 +8,7 @@ type PdfDocumentProps = {
 }
 
 export default function PdfDocument({ file }: PdfDocumentProps) {
+  console.log('PdfDocument: render')
   return (
     <div className={styles.container}>
       <div>

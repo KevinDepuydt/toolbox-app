@@ -10,12 +10,16 @@ type PdfDocumentCanvasProps = {
 
 PDFJS.GlobalWorkerOptions.workerSrc = pdfjsWorker
 
+// flag used to prevent unnecessary pdf drawing
+let isDrawing = false
+
 export default function PdfDocumentCanvas({ file }: PdfDocumentCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     (async () => {
-      if (file && containerRef.current) {
+      if (file && containerRef.current && !isDrawing) {
+        isDrawing = true
         try {
           const pdfArrayBuffer = await file.arrayBuffer()
           const pdf = await PDFJS.getDocument(pdfArrayBuffer).promise
@@ -39,17 +43,19 @@ export default function PdfDocumentCanvas({ file }: PdfDocumentCanvasProps) {
             page.render({
               canvasContext: context as CanvasRenderingContext2D,
               viewport: viewport
-            });
+            })
 
             // append canvas to container
             containerRef.current.appendChild(canvas)
           }
         } catch (e) {
           console.error(e)
+        } finally {
+          isDrawing = false
         }
       }
     })()
-  }, [file, containerRef])
+  }, [file])
 
   return <div ref={containerRef}></div>;
 }
