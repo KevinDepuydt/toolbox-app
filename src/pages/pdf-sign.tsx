@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNotifications } from '@contexts/notifications'
-import FileDropZone from '@components/file-drop-zone/file-drop-zone'
+import PdfSignWrapper from '@components/pages/pdf-sign/pdf-sign-wrapper/pdf-sign-wrapper'
 
 
 export default function PDFSignPage() {
@@ -14,12 +14,9 @@ export default function PDFSignPage() {
   }
 
   return (
-    <>
-      <FileDropZone
-        accept="application/pdf"
-        onSelect={handleSelect}
-        multiple={false}
-      />
-    </>
+    <PdfSignWrapper
+      file={pdfFile}
+      onFileSelect={handleSelect}
+    />
   );
 }

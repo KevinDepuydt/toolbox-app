@@ -4,7 +4,12 @@ module.exports = {
     "./src/**/*.{ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        // pdf-sign-page
+        'pdf-sign': '3fr minmax(200px, 1fr)',
+      }
+    },
   },
   plugins: [],
 }
