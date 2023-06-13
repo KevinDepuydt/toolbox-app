@@ -1,3 +1,11 @@
 .wrapper {
-  @apply grid gap-4 grid-cols-pdf-sign;
+  @apply flex items-start;
+}
+
+.content {
+  @apply flex-1;
+}
+
+.sidebar {
+  @apply min-w-[250px] w-[20vw] ml-4 sticky top-4;
 }

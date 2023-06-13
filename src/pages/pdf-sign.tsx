@@ -13,10 +13,21 @@ export default function PDFSignPage() {
     }
   }
 
+  function handleDelete() {
+    setPdfFile(undefined)
+    notify.success('The document has been deleted')
+  }
+
+  function handleSign() {
+    notify.success('The document has been signed')
+  }
+
   return (
     <PdfSignWrapper
       file={pdfFile}
       onFileSelect={handleSelect}
+      onFileDelete={handleDelete}
+      onFileSign={handleSign}
     />
   );
 }
