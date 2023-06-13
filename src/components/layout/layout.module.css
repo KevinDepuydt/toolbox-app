@@ -7,7 +7,7 @@
 }
 
 .subtitle {
-  @apply font-medium text-slate-400 text-lg pb-4;
+  @apply font-normal text-slate-400 text-lg pb-4;
 }
 
 .content {
